@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-/** The card's footer slot, usually for actions. Use it on the element you want, e.g. <footer dsCardFooter>. */
+/** The card's footer slot, usually for actions. Use it on the element you want, e.g. <div dsCardFooter>. */
 @Component({
   selector: '[dsCardFooter]',
   template: '<ng-content />',

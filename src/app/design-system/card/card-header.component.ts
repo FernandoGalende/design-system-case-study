@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-/** The card's header slot. Use it on the element you want, e.g. <header dsCardHeader>. */
+/** The card's header slot. Use it on the element you want, e.g. <div dsCardHeader>. */
 @Component({
   selector: '[dsCardHeader]',
   template: '<ng-content />',
