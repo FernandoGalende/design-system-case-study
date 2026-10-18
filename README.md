@@ -81,8 +81,16 @@ Details and reasons for each, row by row, in [AI-LOG.md](AI-LOG.md).
 The 35 tests cover the public and accessibility contract: alert roles per variant and `live`,
 accessible text and i18n prefix, projection, icons, action types and dismiss; card slot order,
 unused slots, nothing dropped, `alt` and heading level; and token parity between both brands.
-Layout, container queries and contrast can't be tested in jsdom, so they were checked in headless
-Chrome in both brands.
+jsdom has no layout, so the rest was verified outside the tests: layout and container queries in
+headless Chrome in both brands, contrast computed with a script from the token values, and the
+focus ring checked manually with the keyboard.
+
+## Known limitations
+
+- An alert inserted together with its live region (for example inside `@if`) may not be announced
+  by some screen readers: they only announce changes inside a live region that already exists.
+  Render dynamic alerts inside a live region present on load, or use `live="assertive"` for
+  critical ones.
 
 ## Left out and next steps
 
@@ -91,6 +99,12 @@ Chrome in both brands.
 - Routing or Storybook for the showcase as more components are added.
 - Visual regression tests.
 - Design review of the Nova border color, and a distinct error icon shape.
+- Tests that still assert on internal classes (`.icon`, `.heading`, `.body`, `.visually-hidden`).
+- `tokens.spec.ts` resolves `tokens.scss` from `process.cwd()`, so it must run from the project
+  root.
+- The action sets its default `type` once; a dynamic `[attr.type]` binding from the consumer would
+  compete with it.
+- The brand select in the app shell loses its drawn chevron in forced-colors mode.
 
 ## Working with AI
 

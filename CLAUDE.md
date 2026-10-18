@@ -36,7 +36,8 @@
 - Native elements, accessible names, visible focus with --ds-focus,
   no color-only meaning. Exception: warning and error icons follow the spec and
   differ only by color; the variant is conveyed to assistive technology by the
-  hidden prefix. Known trade-off, to raise with design.
+  hidden prefix. Known trade-off, to raise with design. Warning and error text
+  must state the severity in words.
 
 ## Workflow
 
