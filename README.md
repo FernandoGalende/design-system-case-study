@@ -113,3 +113,98 @@ Built with Claude Code, guided by the rules in [CLAUDE.md](CLAUDE.md): small ste
 code, tokens only, accessibility in every component, and tests on behavior. I reviewed every diff
 before committing, and new tests were checked by breaking the code on purpose. Each accepted,
 rejected or corrected proposal is recorded in [AI-LOG.md](AI-LOG.md).
+
+## Extra (post-timebox): multi-platform tokens
+
+Done after the 4-hour timebox and optional. It lives on the branch `post-timebox/token-pipeline`
+and doesn't change any component or the showcase.
+
+Run `npm install`, then `npm run tokens`. The output goes to `tokens/build/web` (CSS custom
+properties), `tokens/build/ios` (Swift) and `tokens/build/android` (Jetpack Compose).
+
+The DTCG JSON files in `tokens/` are the source of truth: `foundations.json` holds the shared
+values and each brand has its own file in `tokens/brands/`. `build-tokens.mjs` runs Style
+Dictionary once per brand, and `token-pipeline.spec.ts` proves the generated CSS matches
+`tokens.scss` selector by selector, name by name and value by value.
+
+Why it matters: one source of truth for web, iOS and Android across brands. Next step:
+`tokens.scss` becomes a generated file.
+
+```mermaid
+flowchart TD
+  figma["Figma Variables<br/>(designer)"]:::target
+  export["Export to DTCG JSON<br/>(Tokens Studio or Figma Variables API)"]:::target
+  json["tokens/*.json in git<br/>reviewed via pull request"]:::built
+  sd["Style Dictionary<br/>one build per brand"]:::built
+  css["Web: CSS custom properties"]:::built
+  swift["iOS: Swift"]:::built
+  compose["Android: Compose"]:::built
+  mcp["Design system MCP server<br/>(AI agents read tokens and component APIs)"]:::target
+  angular["Angular components"]:::target
+  native["Native apps"]:::target
+  codeConnect["Figma Code Connect<br/>(Angular, Swift and Compose snippets in Dev Mode)"]:::target
+
+  figma -.-> export -.-> json
+  json --> sd
+  sd --> css & swift & compose
+  json -.-> mcp
+  css -.-> angular
+  swift -.-> native
+  compose -.-> native
+  angular -.-> codeConnect
+  native -.-> codeConnect
+  codeConnect -.-> figma
+
+  classDef built stroke-width:2px
+  classDef target stroke-dasharray:5 5
+```
+
+Solid: built on this branch. Dashed: target, not built. The pull request on `tokens/*.json` is where
+design and engineering agree on every token change before it reaches any platform.
+
+Target, not built:
+
+- A DTCG resolver to combine brand × mode.
+- Token CI and versioned releases with Changesets.
+
+### Target system architecture (not built)
+
+```mermaid
+flowchart TD
+  subgraph figmaLib["Figma"]
+    figma["Figma library (Variables)"]
+  end
+  subgraph tokensRepo["Tokens repo"]
+    dtcg["DTCG JSON + Style Dictionary<br/>CI + Changesets"]
+    npm["npm package (CSS + TS)"]
+    spm["Swift Package"]
+    maven["Maven/Gradle artifact (Compose)"]
+  end
+  subgraph libs["Component libraries (one repo per platform)"]
+    ng["Angular"]
+    swiftui["SwiftUI"]
+    composeLib["Compose"]
+  end
+  subgraph apps["Product apps"]
+    web["Web"]
+    ios["iOS"]
+    android["Android"]
+  end
+  docs["Docs site"]
+  mcp["Design system MCP server"]
+
+  figma <-->|"Tokens Studio / Variables API"| dtcg
+  dtcg --> npm & spm & maven
+  npm --> ng
+  spm --> swiftui
+  maven --> composeLib
+  ng -->|by version| web
+  swiftui -->|by version| ios
+  composeLib -->|by version| android
+  tokensRepo --> docs & mcp
+  libs --> docs & mcp
+```
+
+Multi-repo lets each platform release on its own cadence and keeps native tooling native; a
+monorepo makes a token change and its component impact land in one pull request. I would start
+with a tokens repo plus per-platform libraries, and revisit it once the team grows.
