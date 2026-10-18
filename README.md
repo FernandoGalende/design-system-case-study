@@ -113,3 +113,10 @@ Built with Claude Code, guided by the rules in [CLAUDE.md](CLAUDE.md): small ste
 code, tokens only, accessibility in every component, and tests on behavior. I reviewed every diff
 before committing, and new tests were checked by breaking the code on purpose. Each accepted,
 rejected or corrected proposal is recorded in [AI-LOG.md](AI-LOG.md).
+
+## Extra (post-timebox)
+
+After the timebox I explored a multi-platform token pipeline with Style Dictionary that generates
+CSS, Swift and Kotlin from a single JSON source per brand. It lives in the
+`post-timebox/token-pipeline` branch, with its own README section, architecture diagrams and how
+to run it.
