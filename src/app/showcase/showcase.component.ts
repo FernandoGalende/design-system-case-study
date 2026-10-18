@@ -8,10 +8,11 @@ import {
   viewChild,
 } from '@angular/core';
 import { ALERT_IMPORTS } from '../design-system/alert';
+import { CARD_IMPORTS } from '../design-system/card';
 
 @Component({
   selector: 'app-showcase',
-  imports: [ALERT_IMPORTS],
+  imports: [ALERT_IMPORTS, CARD_IMPORTS],
   templateUrl: './showcase.component.html',
   styleUrl: './showcase.component.scss',
 })
@@ -100,6 +101,37 @@ visible = signal(true);
      layout when its container is narrower than 30rem. -->
 <div style="inline-size: 375px">
   <ds-alert variant="warning" heading="Payment method expiring">...</ds-alert>
+</div>`,
+    cardStructure: `// component.ts
+import { CARD_IMPORTS } from './design-system/card';
+@Component({ imports: [CARD_IMPORTS], ... })
+
+<!-- template: every slot is optional; content outside the
+     named slots is the body. You choose the heading level. -->
+<ds-card>
+  <!-- alt is required: describe the image, or alt="" if decorative -->
+  <img dsCardImage src="/workspace.jpg" alt="" />
+  <header dsCardHeader><h4 dsCardTitle>Team workspace</h4></header>
+  Invite your teammates and share projects in one place.
+  <footer dsCardFooter>
+    <button type="button">Invite</button>
+  </footer>
+</ds-card>`,
+    cardWithAlert: `<ds-card>
+  <header dsCardHeader><h4 dsCardTitle>Payment methods</h4></header>
+  Visa ending in 4242 · expires 11/26
+  <ds-alert variant="warning" heading="Payment method expiring" live="off">
+    Your card expires next month.
+    <a dsAlertAction href="/billing">Update card</a>
+  </ds-alert>
+  <footer dsCardFooter>
+    <button type="button">Add payment method</button>
+  </footer>
+</ds-card>`,
+    cardNarrow: `<!-- The alert queries its own width, so inside a narrow card
+     it switches to its compact layout with no extra input. -->
+<div style="inline-size: 375px">
+  <ds-card>...<ds-alert variant="warning" ...>...</ds-alert>...</ds-card>
 </div>`,
   };
 }

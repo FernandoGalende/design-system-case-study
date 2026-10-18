@@ -80,6 +80,22 @@ pre {
   line-height: 1.5;
 }
 
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--ds-space-4);
+  align-items: start;
+  max-width: 52rem;
+
+  &.single {
+    grid-template-columns: minmax(0, 45rem);
+  }
+}
+
+.canvas + .canvas {
+  margin-top: var(--ds-space-6);
+}
+
 .narrow-frame {
   inline-size: 375px;
   max-inline-size: 100%;
