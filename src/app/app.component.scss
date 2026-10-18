@@ -46,10 +46,17 @@ h1 {
 
 select {
   min-width: 8.125rem;
-  padding: 0.625rem 2.125rem 0.625rem 0.75rem;
+  padding: 0.625rem 2.5rem 0.625rem 0.75rem;
   border: 1px solid #c8ced7;
   border-radius: 0.5rem;
-  background: white;
+  // Some browsers pin the native arrow to the border and ignore padding, so draw our own chevron.
+  appearance: none;
+  background:
+    linear-gradient(45deg, transparent 50%, currentColor 50%) right 1.125rem center / 0.3125rem
+      0.3125rem no-repeat,
+    linear-gradient(135deg, currentColor 50%, transparent 50%) right 0.8125rem center / 0.3125rem
+      0.3125rem no-repeat,
+    white;
   color: #1f2430;
 }
 
