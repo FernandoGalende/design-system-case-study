@@ -70,8 +70,10 @@ export class ShowcaseComponent {
 import { ALERT_IMPORTS } from './design-system/alert';
 @Component({ imports: [ALERT_IMPORTS], ... })
 
-<!-- template -->
-<ds-alert variant="warning" heading="Payment method expiring" live="off">
+<!-- template: dismissible is controlled, so the parent hides it -->
+<ds-alert variant="warning" heading="Payment method expiring" live="off"
+          dismissible dismissLabel="Dismiss expiring card alert"
+          (dismissed)="hide()">
   Your card ending in 4242 expires next month.
   <a dsAlertAction href="/billing">Update payment method</a>
 </ds-alert>`,
@@ -122,7 +124,6 @@ import { CARD_IMPORTS } from './design-system/card';
   Visa ending in 4242 · expires 11/26
   <ds-alert variant="warning" heading="Payment method expiring" live="off">
     Your card expires next month.
-    <a dsAlertAction href="/billing">Update card</a>
   </ds-alert>
   <div dsCardFooter>
     <button type="button">Add payment method</button>
