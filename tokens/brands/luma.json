@@ -1,0 +1,98 @@
+{
+  "ds": {
+    "page-bg": {
+      "$value": "#f6f7fb",
+      "$type": "color"
+    },
+    "surface": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "text": {
+      "$value": "#1f2430",
+      "$type": "color"
+    },
+    "text-muted": {
+      "$value": "#626b7a",
+      "$type": "color"
+    },
+    "border": {
+      "subtle": {
+        "$value": "#d8dde6",
+        "$type": "color"
+      }
+    },
+    "focus": {
+      "$value": "#5b3df5",
+      "$type": "color"
+    },
+    "action": {
+      "$value": "#4d32df",
+      "$type": "color"
+    },
+    "alert": {
+      "info": {
+        "bg": {
+          "$value": "#eef2ff",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#9aa9ff",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#4d32df",
+          "$type": "color"
+        }
+      },
+      "success": {
+        "bg": {
+          "$value": "#edfbf3",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#71cf95",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#137a3d",
+          "$type": "color"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$value": "#fff7e5",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#e6b950",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#8a5b00",
+          "$type": "color"
+        }
+      },
+      "error": {
+        "bg": {
+          "$value": "#fff0f1",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#ef8c92",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#b4232d",
+          "$type": "color"
+        }
+      }
+    },
+    "radius": {
+      "md": {
+        "$value": "0.75rem",
+        "$type": "dimension"
+      }
+    }
+  }
+}

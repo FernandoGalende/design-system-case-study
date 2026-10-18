@@ -23,6 +23,7 @@
     "@angular/cli": "~22.2.0",
     "@angular/compiler-cli": "~22.2.0",
     "jsdom": "^30.1.1",
+    "style-dictionary": "~5.7.0",
     "typescript": "~6.0.0",
     "vitest": "^5.0.2"
   }

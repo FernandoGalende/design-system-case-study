@@ -1,0 +1,99 @@
+{
+  "ds": {
+    "page-bg": {
+      "$value": "#f3f8fa",
+      "$type": "color"
+    },
+    "surface": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "text": {
+      "$value": "#14232b",
+      "$type": "color"
+    },
+    "text-muted": {
+      "$value": "#536a75",
+      "$type": "color"
+    },
+    "border": {
+      "subtle": {
+        "$value": "#d3dfe5",
+        "$type": "color",
+        "$description": "Pending design review: neutral picked from Nova's blue-grey family."
+      }
+    },
+    "focus": {
+      "$value": "#006e90",
+      "$type": "color"
+    },
+    "action": {
+      "$value": "#005f7d",
+      "$type": "color"
+    },
+    "alert": {
+      "info": {
+        "bg": {
+          "$value": "#e9f7fb",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#74bdd2",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#006e90",
+          "$type": "color"
+        }
+      },
+      "success": {
+        "bg": {
+          "$value": "#edf9f1",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#69be85",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#1f7141",
+          "$type": "color"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$value": "#fff5df",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#dfaa46",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#7a5106",
+          "$type": "color"
+        }
+      },
+      "error": {
+        "bg": {
+          "$value": "#fff0ec",
+          "$type": "color"
+        },
+        "border": {
+          "$value": "#e98c77",
+          "$type": "color"
+        },
+        "icon": {
+          "$value": "#a43825",
+          "$type": "color"
+        }
+      }
+    },
+    "radius": {
+      "md": {
+        "$value": "0.25rem",
+        "$type": "dimension"
+      }
+    }
+  }
+}
