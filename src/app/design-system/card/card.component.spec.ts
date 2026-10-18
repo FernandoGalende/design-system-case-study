@@ -25,6 +25,29 @@ class BodyOnlyHost {}
 @Component({
   imports: [CARD_IMPORTS],
   template: `
+    <ds-card class="header-only"><header dsCardHeader><h3 dsCardTitle>Storage</h3></header></ds-card>
+    <ds-card class="footer-only"><footer dsCardFooter><button type="button">Upgrade</button></footer></ds-card>
+  `,
+})
+class SingleSlotHost {}
+
+@Component({
+  imports: [CARD_IMPORTS],
+  template: `
+    <ds-card>
+      Loose text before.
+      <header dsCardHeader><h3 dsCardTitle>Team</h3></header>
+      <p class="loose-paragraph">A paragraph between slots.</p>
+      <footer dsCardFooter><button type="button">Invite</button></footer>
+      <span class="loose-span">A span after the footer.</span>
+    </ds-card>
+  `,
+})
+class MixedContentHost {}
+
+@Component({
+  imports: [CARD_IMPORTS],
+  template: `
     <ds-card>
       <img dsCardImage src="/pattern.svg" alt="" class="decorative" />
       <img dsCardImage src="/office.jpg" [alt]="description()" class="bound" />
@@ -75,10 +98,28 @@ describe('CardComponent', () => {
       expect(partsOf(card)).toEqual(['div']);
     });
 
-    it('renders content outside the named slots as the body', () => {
-      const { card } = setup(BodyOnlyHost);
+    it.each([
+      ['header-only', 'header', 'footer'],
+      ['footer-only', 'footer', 'header'],
+    ])('renders a header or footer only when provided (%s)', (cardClass, rendered, absent) => {
+      const { fixture } = setup(SingleSlotHost);
+      const card = fixture.nativeElement.querySelector(`ds-card.${cardClass}`) as HTMLElement;
 
-      expect(card.textContent?.trim()).toBe('Only a body.');
+      expect(card.querySelector(rendered)).not.toBeNull();
+      expect(card.querySelector(absent)).toBeNull();
+    });
+
+    it('projects everything outside the named slots as the body, dropping nothing', () => {
+      const { card } = setup(MixedContentHost);
+      const paragraph = card.querySelector('.loose-paragraph');
+      const span = card.querySelector('.loose-span');
+
+      expect(card.textContent).toContain('Loose text before.');
+      expect(paragraph?.textContent).toBe('A paragraph between slots.');
+      expect(span?.textContent).toBe('A span after the footer.');
+      expect(paragraph?.closest('header, footer')).toBeNull();
+      expect(span?.closest('header, footer')).toBeNull();
+      expect(paragraph?.parentElement).toBe(span?.parentElement);
     });
   });
 
