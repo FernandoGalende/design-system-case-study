@@ -1,4 +1,116 @@
-// Layout and variant styles come in the styling step; this only keeps the prefix accessible.
+// Custom properties can't be used in @container conditions, so the breakpoint is an SCSS constant.
+$compact-breakpoint: 30rem;
+
+:host {
+  --_icon-size: 1.25rem;
+  --_dismiss-size: 1.5rem;
+  --_padding-compact: 0.875rem;
+
+  --_bg: var(--ds-alert-info-bg);
+  --_border: var(--ds-alert-info-border);
+  --_fg: var(--ds-alert-info-icon);
+  --ds-alert-action-color: var(--_fg);
+
+  display: block;
+  container-type: inline-size;
+}
+
+@each $variant in success, warning, error {
+  :host([data-variant='#{$variant}']) {
+    --_bg: var(--ds-alert-#{$variant}-bg);
+    --_border: var(--ds-alert-#{$variant}-border);
+    --_fg: var(--ds-alert-#{$variant}-icon);
+  }
+}
+
+.alert {
+  display: grid;
+  grid-template-areas: 'icon content dismiss';
+  grid-template-columns: var(--_icon-size) minmax(0, 1fr) auto;
+  gap: var(--ds-space-3);
+  align-items: start;
+  padding: var(--ds-space-4);
+  border: var(--ds-border-width) solid var(--_border);
+  border-radius: var(--ds-radius-md);
+  background: var(--_bg);
+  color: var(--ds-text);
+
+  &:not(:has(> .icon)) {
+    grid-template-areas: 'content dismiss';
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  color: var(--_fg);
+}
+
+.default-icon {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.content {
+  grid-area: content;
+}
+
+.heading {
+  margin: 0 0 var(--ds-space-1);
+  font-size: var(--ds-font-size-md);
+  line-height: var(--ds-line-height-md);
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.body {
+  font-size: var(--ds-font-size-sm);
+  line-height: var(--ds-line-height-sm);
+}
+
+.action {
+  margin-block-start: var(--ds-space-2);
+}
+
+.dismiss {
+  grid-area: dismiss;
+  display: grid;
+  place-items: center;
+  inline-size: var(--_dismiss-size);
+  block-size: var(--_dismiss-size);
+  // The hit area grows to --_dismiss-size while the layout keeps the icon size.
+  margin: calc((var(--_icon-size) - var(--_dismiss-size)) / 2);
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-radius-md);
+  background: none;
+  color: var(--ds-text-muted);
+  cursor: pointer;
+
+  svg {
+    inline-size: var(--_icon-size);
+    block-size: var(--_icon-size);
+  }
+
+  &:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-focus);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
+}
+
+@container (inline-size < #{$compact-breakpoint}) {
+  .alert {
+    padding: var(--_padding-compact);
+  }
+
+  .action {
+    margin-block-start: var(--ds-space-3);
+  }
+}
+
 .visually-hidden {
   position: absolute;
   inline-size: 1px;

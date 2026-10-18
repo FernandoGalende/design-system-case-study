@@ -180,7 +180,10 @@ describe('AlertComponent', () => {
     it('replaces the default icon with a custom one', () => {
       const { alert } = setup(ProjectedContentHost);
 
-      expect(alert.querySelector('.icon .custom-icon')).not.toBeNull();
+      const customIcon = alert.querySelector<SVGElement>('.icon .custom-icon');
+      expect(customIcon?.getAttribute('aria-hidden')).toBe('true');
+      expect(customIcon?.style.width).toBe('100%');
+      expect(customIcon?.style.height).toBe('100%');
       expect(alert.querySelector('.default-icon')).toBeNull();
     });
 
