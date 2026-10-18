@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertComponent } from '../design-system/alert/alert.component';
+import { ALERT_IMPORTS } from '../design-system/alert';
 
 @Component({
   selector: 'app-showcase',
-  imports: [AlertComponent],
+  imports: [ALERT_IMPORTS],
   templateUrl: './showcase.component.html',
   styleUrl: './showcase.component.scss',
 })

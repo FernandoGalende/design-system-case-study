@@ -1,0 +1,23 @@
+:host {
+  --_underline-offset: 2px;
+
+  color: var(--ds-alert-action-color);
+  font-size: var(--ds-font-size-sm);
+  line-height: var(--ds-line-height-sm);
+  font-weight: var(--ds-font-weight-bold);
+  text-decoration: underline;
+  text-underline-offset: var(--_underline-offset);
+  cursor: pointer;
+}
+
+:host(button) {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+}
+
+:host(:focus-visible) {
+  outline: var(--ds-focus-ring-width) solid var(--ds-focus);
+  outline-offset: var(--ds-focus-ring-offset);
+}

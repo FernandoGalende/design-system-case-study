@@ -1,11 +1,50 @@
-<!--
-  Intentionally incomplete starter implementation.
-  Replace this markup as part of the exercise.
--->
-<div class="alert-placeholder" [attr.data-variant]="variant()">
-  <strong>{{ title() || 'Alert component not implemented yet' }}</strong>
-  <p>Use the design specification to implement this component.</p>
-  @if (dismissible()) {
-    <button type="button" (click)="dismissed.emit()">Dismiss</button>
+@if (showIcon()) {
+  <span class="icon" aria-hidden="true">
+    @if (customIcon()) {
+      <ng-content select="[dsAlertIcon]" />
+    } @else {
+      <svg class="default-icon" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        @switch (variant()) {
+          @case ('success') {
+            <circle cx="10" cy="10" r="8" />
+            <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke-linecap="round" stroke-linejoin="round" />
+          }
+          @case ('warning') {
+            <path d="M10 2.5 18 17H2z" stroke-linejoin="round" />
+            <path d="M10 8v4" stroke-linecap="round" />
+            <circle cx="10" cy="14.5" r="1" fill="currentColor" stroke="none" />
+          }
+          @case ('error') {
+            <path d="M6.7 2h6.6L18 6.7v6.6L13.3 18H6.7L2 13.3V6.7z" stroke-linejoin="round" />
+            <path d="M10 6v5" stroke-linecap="round" />
+            <circle cx="10" cy="14" r="1" fill="currentColor" stroke="none" />
+          }
+          @default {
+            <circle cx="10" cy="10" r="8" />
+            <path d="M10 9v5" stroke-linecap="round" />
+            <circle cx="10" cy="6" r="1" fill="currentColor" stroke="none" />
+          }
+        }
+      </svg>
+    }
+  </span>
+}
+
+<div class="content">
+  <span class="visually-hidden">{{ variantLabel() }}</span>
+  @if (heading()) {
+    <p class="heading">{{ heading() }}</p>
+  }
+  <div class="body"><ng-content /></div>
+  @if (action()) {
+    <div class="action"><ng-content select="[dsAlertAction]" /></div>
   }
 </div>
+
+@if (dismissible()) {
+  <button type="button" class="dismiss" [attr.aria-label]="dismissLabel()" (click)="dismissed.emit()">
+    <svg aria-hidden="true" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 5l10 10M15 5 5 15" stroke-linecap="round" />
+    </svg>
+  </button>
+}
