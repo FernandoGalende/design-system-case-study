@@ -48,6 +48,60 @@ code {
   margin-bottom: 1rem;
 }
 
+.page-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-bottom: var(--ds-space-6);
+  padding: var(--ds-space-2) var(--ds-space-4);
+  border: var(--ds-border-width) solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-surface);
+  font-size: var(--ds-font-size-sm);
+  line-height: var(--ds-line-height-sm);
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-space-1) var(--ds-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  > ul > li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--ds-space-1) var(--ds-space-3);
+
+    > a {
+      color: var(--ds-text);
+      font-weight: var(--ds-font-weight-semibold);
+    }
+  }
+
+  a {
+    color: var(--ds-action);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: var(--ds-focus-ring-width) solid var(--ds-focus);
+      outline-offset: var(--ds-focus-ring-offset);
+    }
+  }
+}
+
+// Keeps in-page link targets clear of the sticky navigation.
+h2[id],
+h3[id] {
+  scroll-margin-top: 5rem;
+}
+
 // Scoped so it doesn't override the color of projected a[dsAlertAction].
 .intro a {
   color: var(--ds-action);

@@ -11,6 +11,29 @@
   </p>
 </section>
 
+<nav class="page-nav" aria-label="On this page">
+  <!-- role="list" keeps list semantics in Safari, which drops them with list-style: none. -->
+  <ul role="list">
+    <li>
+      <a href="#alert-title">Alert</a>
+      <ul role="list">
+        <li><a href="#alert-variants">Variants</a></li>
+        <li><a href="#alert-optional">Optional parts</a></li>
+        <li><a href="#alert-dismissible">Dismissible</a></li>
+        <li><a href="#alert-compact">Compact layout</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#card-title">Card</a>
+      <ul role="list">
+        <li><a href="#card-structure">Structure</a></li>
+        <li><a href="#card-alert">Alert inside a card</a></li>
+        <li><a href="#card-narrow">Narrow card</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
 <section class="canvas" aria-labelledby="alert-title">
   <div class="canvas-label">COMPONENT</div>
   <h2 id="alert-title">Alert</h2>
@@ -22,7 +45,7 @@
   </p>
 
   <div class="group">
-    <h3 #variantsHeading tabindex="-1">Variants</h3>
+    <h3 id="alert-variants" #variantsHeading tabindex="-1">Variants</h3>
     <div class="examples">
       @if (!dismissedVariants().has('info')) {
         <ds-alert
@@ -67,7 +90,7 @@
   </div>
 
   <div class="group">
-    <h3>Optional parts</h3>
+    <h3 id="alert-optional">Optional parts</h3>
     <div class="examples">
       <ds-alert variant="success" live="off">Changes saved.</ds-alert>
       <ds-alert [showIcon]="false" heading="Scheduled maintenance" live="off">
@@ -85,7 +108,7 @@
   </div>
 
   <div class="group">
-    <h3>Dismissible</h3>
+    <h3 id="alert-dismissible">Dismissible</h3>
     <div class="examples">
       @if (dismissibleVisible()) {
         <ds-alert
@@ -108,7 +131,7 @@
   </div>
 
   <div class="group">
-    <h3>Compact layout (375px container)</h3>
+    <h3 id="alert-compact">Compact layout (375px container)</h3>
     <div class="examples">
       <div class="narrow-frame">
         <ds-alert variant="warning" heading="Payment method expiring" live="off">
@@ -131,7 +154,7 @@
   </p>
 
   <div class="group">
-    <h3>Structure</h3>
+    <h3 id="card-structure">Structure</h3>
     <div class="card-grid">
       <ds-card>
         <div dsCardHeader><h4 dsCardTitle>Team workspace</h4></div>
@@ -158,7 +181,7 @@
   </div>
 
   <div class="group">
-    <h3>Alert inside a card</h3>
+    <h3 id="card-alert">Alert inside a card</h3>
     <div class="card-grid single">
       <ds-card>
         <div dsCardHeader><h4 dsCardTitle>Payment methods</h4></div>
@@ -176,7 +199,7 @@
   </div>
 
   <div class="group">
-    <h3>Alert inside a narrow card (375px container)</h3>
+    <h3 id="card-narrow">Alert inside a narrow card (375px container)</h3>
     <div class="examples">
       <div class="narrow-frame">
         <ds-card>
