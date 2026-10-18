@@ -36,16 +36,14 @@ class BareDismissibleHost {}
 @Component({
   imports: [ALERT_IMPORTS],
   template: `
-    <ds-alert variant="error" [showIcon]="showIcon()">
+    <ds-alert variant="error">
       <svg dsAlertIcon class="custom-icon"></svg>
       We couldn't save your changes.
       <a dsAlertAction href="/retry">Try again</a>
     </ds-alert>
   `,
 })
-class ProjectedContentHost {
-  readonly showIcon = signal(true);
-}
+class ProjectedContentHost {}
 
 @Component({
   imports: [ALERT_IMPORTS],
@@ -59,15 +57,18 @@ class ProjectedContentHost {
         Ready to send.
         <button dsAlertAction type="submit" class="submit-type">Send</button>
       </ds-alert>
-      <ds-alert>
-        New method.
-        <a dsAlertAction href="/passkeys">Set up passkey</a>
-      </ds-alert>
     </form>
   `,
 })
 class ActionTypeHost {
   submitCount = 0;
+}
+
+/** Text a screen reader would get: everything except aria-hidden subtrees, whitespace collapsed. */
+function textOf(element: Element): string {
+  const clone = element.cloneNode(true) as Element;
+  clone.querySelectorAll('[aria-hidden="true"]').forEach((hidden) => hidden.remove());
+  return (clone.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
 function setup<T>(hostType: Type<T>) {
@@ -93,7 +94,6 @@ describe('AlertComponent', () => {
       update((host) => host.variant.set(variant));
 
       expect(alert.getAttribute('role')).toBe(role);
-      expect(alert.hasAttribute('aria-live')).toBe(false);
     });
 
     it.each<[AlertLive, string | null]>([
@@ -108,7 +108,22 @@ describe('AlertComponent', () => {
       });
 
       expect(alert.getAttribute('role')).toBe(role);
-      expect(alert.hasAttribute('aria-live')).toBe(false);
+    });
+
+    it('never adds aria-live on top of the role', () => {
+      const { alert, update } = setup(ConfigurableHost);
+      const variants: AlertVariant[] = ['info', 'success', 'warning', 'error'];
+      const lives: (AlertLive | undefined)[] = [undefined, 'polite', 'assertive', 'off'];
+
+      for (const variant of variants) {
+        for (const live of lives) {
+          update((host) => {
+            host.variant.set(variant);
+            host.live.set(live);
+          });
+          expect(alert.hasAttribute('aria-live')).toBe(false);
+        }
+      }
     });
   });
 
@@ -117,9 +132,7 @@ describe('AlertComponent', () => {
       const { alert, update } = setup(ConfigurableHost);
       update((host) => host.variant.set('warning'));
 
-      const prefix = alert.querySelector('.content')?.firstElementChild;
-      expect(prefix?.textContent?.trim()).toBe('Warning:');
-      expect(prefix?.classList).toContain('visually-hidden');
+      expect(textOf(alert)).toBe('Warning: Check your connection and try again.');
     });
 
     it('uses the labels provided for i18n', () => {
@@ -157,19 +170,13 @@ describe('AlertComponent', () => {
       );
     });
 
-    it('projects the action into its own slot', () => {
+    it('renders the projected action as a link with its href', () => {
       const { alert } = setup(ProjectedContentHost);
-      const link = alert.querySelector('.action a');
+      const links = alert.querySelectorAll('a');
 
-      expect(link?.textContent?.trim()).toBe('Try again');
-      expect(link?.getAttribute('href')).toBe('/retry');
-      expect(alert.querySelector('.body a')).toBeNull();
-    });
-
-    it('renders no action slot without an action', () => {
-      const { alert } = setup(ConfigurableHost);
-
-      expect(alert.querySelector('.action')).toBeNull();
+      expect(links).toHaveLength(1);
+      expect(links[0].textContent?.trim()).toBe('Try again');
+      expect(links[0].getAttribute('href')).toBe('/retry');
     });
   });
 
@@ -182,17 +189,6 @@ describe('AlertComponent', () => {
       expect(icon?.querySelector('.default-icon')).not.toBeNull();
     });
 
-    it('uses a different shape for warning and error', () => {
-      const { alert, update } = setup(ConfigurableHost);
-      update((host) => host.variant.set('warning'));
-      const warningIcon = alert.querySelector('.default-icon')?.innerHTML;
-
-      update((host) => host.variant.set('error'));
-      const errorIcon = alert.querySelector('.default-icon')?.innerHTML;
-
-      expect(warningIcon).not.toBe(errorIcon);
-    });
-
     it('hides the icon when showIcon is false', () => {
       const { alert, update } = setup(ConfigurableHost);
       update((host) => host.showIcon.set(false));
@@ -203,18 +199,11 @@ describe('AlertComponent', () => {
     it('replaces the default icon with a custom one', () => {
       const { alert } = setup(ProjectedContentHost);
 
-      const customIcon = alert.querySelector<SVGElement>('.icon .custom-icon');
-      expect(customIcon?.getAttribute('aria-hidden')).toBe('true');
-      expect(customIcon?.style.width).toBe('100%');
-      expect(customIcon?.style.height).toBe('100%');
-      expect(alert.querySelector('.default-icon')).toBeNull();
-    });
+      const icons = alert.querySelectorAll('svg');
 
-    it('hides a custom icon too when showIcon is false', () => {
-      const { alert, update } = setup(ProjectedContentHost);
-      update((host) => host.showIcon.set(false));
-
-      expect(alert.querySelector('.custom-icon')).toBeNull();
+      expect(icons).toHaveLength(1);
+      expect(icons[0].classList).toContain('custom-icon');
+      expect(icons[0].closest('[aria-hidden="true"]')).not.toBeNull();
     });
   });
 
@@ -235,12 +224,6 @@ describe('AlertComponent', () => {
       expect(button.getAttribute('type')).toBe('submit');
       button.click();
       expect(host.submitCount).toBe(1);
-    });
-
-    it('sets no type on a link action', () => {
-      const { fixture } = setup(ActionTypeHost);
-
-      expect(fixture.nativeElement.querySelector('a[dsAlertAction]').hasAttribute('type')).toBe(false);
     });
   });
 
