@@ -1,6 +1,6 @@
 import { Component, signal, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ALERT_IMPORTS, AlertLive, AlertVariant, DS_ALERT_VARIANT_LABELS } from './index';
+import { ALERT_IMPORTS, AlertLabels, AlertLive, AlertVariant, DS_ALERT_LABELS } from './index';
 
 @Component({
   imports: [ALERT_IMPORTS],
@@ -71,6 +71,14 @@ function textOf(element: Element): string {
   return (clone.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
+function provideFrenchLabels() {
+  const labels: AlertLabels = {
+    variants: { info: 'Info :', success: 'Succès :', warning: 'Attention :', error: 'Erreur :' },
+    dismiss: 'Fermer',
+  };
+  TestBed.configureTestingModule({ providers: [{ provide: DS_ALERT_LABELS, useValue: labels }] });
+}
+
 function setup<T>(hostType: Type<T>) {
   const fixture = TestBed.createComponent(hostType);
   fixture.detectChanges();
@@ -136,14 +144,7 @@ describe('AlertComponent', () => {
     });
 
     it('uses the labels provided for i18n', () => {
-      TestBed.configureTestingModule({
-        providers: [
-          {
-            provide: DS_ALERT_VARIANT_LABELS,
-            useValue: { info: 'Info :', success: 'Succès :', warning: 'Attention :', error: 'Erreur :' },
-          },
-        ],
-      });
+      provideFrenchLabels();
       const { alert, update } = setup(ConfigurableHost);
       update((host) => host.variant.set('error'));
 
@@ -228,6 +229,13 @@ describe('AlertComponent', () => {
   });
 
   describe('dismiss', () => {
+    it('takes its default label from DS_ALERT_LABELS', () => {
+      provideFrenchLabels();
+      const { alert } = setup(BareDismissibleHost);
+
+      expect(alert.querySelector('button')?.getAttribute('aria-label')).toBe('Fermer');
+    });
+
     it('renders no dismiss button by default', () => {
       const { alert } = setup(ConfigurableHost);
 

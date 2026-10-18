@@ -69,17 +69,17 @@ Details and reasons for each, row by row, in [AI-LOG.md](AI-LOG.md).
 
 - Live regions: `polite` → `role="status"`, `assertive` → `role="alert"`, `off` → no role, never
   an extra `aria-live`. Errors default to assertive; alerts present on load use `live="off"`.
-- A visually hidden variant prefix ("Error:") is read first and can be translated through
-  `DS_ALERT_VARIANT_LABELS`. Icons are decorative (`aria-hidden`).
-- Native elements: the dismiss button is a `button type="button"` named by `dismissLabel`, with a
-  24px hit area; button actions default to `type="button"` so they never submit a form. Focus is
+- A visually hidden variant prefix ("Error:") is read first. It and the default dismiss label are
+  translated in one place, `DS_ALERT_LABELS`. Icons are decorative (`aria-hidden`).
+- Native elements: the dismiss button is a `button type="button"` named by `DS_ALERT_LABELS` or a
+  per-alert `dismissLabel`, with a 24px hit area; button actions default to `type="button"` so they never submit a form. Focus is
   visible with `--ds-focus`.
 - Card: required `alt` (the build fails without it, `alt=""` for decorative images), heading level
   chosen by the consumer, and `div` slots in the examples to avoid fake banner/contentinfo
   landmarks.
 
-The 35 tests cover the public and accessibility contract: alert roles per variant and `live`,
-accessible text and i18n prefix, projection, icons, action types and dismiss; card slot order,
+The 36 tests cover the public and accessibility contract: alert roles per variant and `live`,
+accessible text and i18n labels, projection, icons, action types and dismiss; card slot order,
 unused slots, nothing dropped, `alt` and heading level; and token parity between both brands.
 jsdom has no layout, so the rest was verified outside the tests: layout and container queries in
 headless Chrome in both brands, contrast computed with a script from the token values, and the

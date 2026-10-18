@@ -6,7 +6,8 @@ export { AlertActionComponent } from './alert-action.component';
 export { AlertIconDirective } from './alert-icon.directive';
 export {
   AlertComponent,
-  DS_ALERT_VARIANT_LABELS,
+  DS_ALERT_LABELS,
+  type AlertLabels,
   type AlertLive,
   type AlertVariant,
 } from './alert.component';
