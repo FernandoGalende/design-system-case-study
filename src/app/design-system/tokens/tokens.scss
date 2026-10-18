@@ -1,3 +1,16 @@
+:root {
+  --ds-font-size-sm: 0.8125rem;
+  --ds-font-size-md: 0.875rem;
+  --ds-line-height-sm: 1.1875rem;
+  --ds-line-height-md: 1.25rem;
+  --ds-font-weight-semibold: 600;
+  --ds-font-weight-bold: 700;
+
+  --ds-border-width: 1px;
+  --ds-focus-ring-width: 2px;
+  --ds-focus-ring-offset: 2px;
+}
+
 :root,
 [data-brand='luma'] {
   --ds-page-bg: #f6f7fb;

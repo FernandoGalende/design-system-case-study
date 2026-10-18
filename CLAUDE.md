@@ -21,9 +21,14 @@
 
 - Styles in each component's .scss. SCSS only for authoring (nesting, mixins, partials).
   Never SCSS variables ($...) for themable values: brand switching is runtime.
-- Only --ds-\* tokens: no hardcoded colors, radii, spacing or font sizes. If a token
-  is missing (e.g. typography, border), add it to BOTH brands in tokens.scss,
-  following the existing naming. Components never know the active brand.
+- Only --ds-\* tokens or private --\_\* properties: no hardcoded colors, radii,
+  spacing or font sizes. Components never know the active brand.
+- tokens.scss holds shared foundations once in :root and only brand-specific
+  values in the brand blocks, following the existing naming.
+- Component-internal constants that don't vary by brand are private --\_\*
+  custom properties at the top of the component's SCSS, not tokens.
+- Tokens stay explicit per role: never point a token to another role just
+  because they share a value today.
 - Responsive with container queries, not media queries.
 
 ## Accessibility
@@ -37,12 +42,14 @@
 - When a step is done, propose a commit with a conventional message
   (feat/fix/test/docs/chore, scope, short summary) and run it only after I
   approve. Never push, never amend or rewrite history, never change git config.
-- Keep AI-LOG.md up to date. After each task I give you, add one row to the
-  table: the step, a one-line summary of my request, and a one-line summary of
-  what you produced. Fill "What I changed and why" only with my words, briefly:
-  what I changed, or what I verified if I accepted it unchanged. Never invent
-  reasons. Never edit older rows unless I ask. Don't log trivial requests.
-  Show me the diff before committing.
+- AI-LOG.md records decisions, not activity. Add a row whenever:
+  - I accept, reject or change one of your proposals,
+  - you catch a problem I hadn't considered (say so in the row),
+  - I correct something you produced.
+    Columns: Step | My request | What the AI produced | What I changed and why.
+    "Why" must be my reason, in my words. If I didn't give one, ask me one short
+    question instead of inventing it. One line per cell. Skip trivial steps.
+    Update the log in the same commit as the step it describes.
 
 ## Tests
 
