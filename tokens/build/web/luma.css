@@ -1,0 +1,26 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root, [data-brand='luma'] {
+  --ds-border-subtle: #d8dde6;
+  --ds-page-bg: #f6f7fb;
+  --ds-surface: #ffffff;
+  --ds-text: #1f2430;
+  --ds-text-muted: #626b7a;
+  --ds-focus: #5b3df5;
+  --ds-action: #4d32df;
+  --ds-alert-info-bg: #eef2ff;
+  --ds-alert-info-border: #9aa9ff;
+  --ds-alert-info-icon: #4d32df;
+  --ds-alert-success-bg: #edfbf3;
+  --ds-alert-success-border: #71cf95;
+  --ds-alert-success-icon: #137a3d;
+  --ds-alert-warning-bg: #fff7e5;
+  --ds-alert-warning-border: #e6b950;
+  --ds-alert-warning-icon: #8a5b00;
+  --ds-alert-error-bg: #fff0f1;
+  --ds-alert-error-border: #ef8c92;
+  --ds-alert-error-icon: #b4232d;
+  --ds-radius-md: 0.75rem;
+}

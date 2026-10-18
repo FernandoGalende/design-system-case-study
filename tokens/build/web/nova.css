@@ -1,0 +1,26 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+[data-brand='nova'] {
+  --ds-border-subtle: #d3dfe5; /** Pending design review: neutral picked from Nova's blue-grey family. */
+  --ds-page-bg: #f3f8fa;
+  --ds-surface: #ffffff;
+  --ds-text: #14232b;
+  --ds-text-muted: #536a75;
+  --ds-focus: #006e90;
+  --ds-action: #005f7d;
+  --ds-alert-info-bg: #e9f7fb;
+  --ds-alert-info-border: #74bdd2;
+  --ds-alert-info-icon: #006e90;
+  --ds-alert-success-bg: #edf9f1;
+  --ds-alert-success-border: #69be85;
+  --ds-alert-success-icon: #1f7141;
+  --ds-alert-warning-bg: #fff5df;
+  --ds-alert-warning-border: #dfaa46;
+  --ds-alert-warning-icon: #7a5106;
+  --ds-alert-error-bg: #fff0ec;
+  --ds-alert-error-border: #e98c77;
+  --ds-alert-error-icon: #a43825;
+  --ds-radius-md: 0.25rem;
+}

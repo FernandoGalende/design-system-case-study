@@ -8,6 +8,7 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
+    "tokens": "node build-tokens.mjs",
     "test": "ng test --no-progress"
   },
   "dependencies": {
