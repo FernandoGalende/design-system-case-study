@@ -24,6 +24,7 @@
   --ds-surface: #ffffff;
   --ds-text: #1f2430;
   --ds-text-muted: #626b7a;
+  --ds-border-subtle: #d8dde6;
   --ds-focus: #5b3df5;
   --ds-action: #4d32df;
 
@@ -51,6 +52,8 @@
   --ds-surface: #ffffff;
   --ds-text: #14232b;
   --ds-text-muted: #536a75;
+  // Pending design review: neutral picked from Nova's blue-grey family.
+  --ds-border-subtle: #d3dfe5;
   --ds-focus: #006e90;
   --ds-action: #005f7d;
 
