@@ -174,17 +174,63 @@ pre {
   border-radius: 0.5rem;
 }
 
+// Showcase-only buttons, not a design-system component. Both variants share size and padding,
+// so their height matches across cards; secondary is the default.
 .demo-button {
+  // States derive from --ds-action with color-mix(); per-brand hover tokens are a next step.
+  --_bg: transparent;
+  --_hover-bg: color-mix(in srgb, var(--ds-action) 8%, transparent);
+  --_active-bg: color-mix(in srgb, var(--ds-action) 16%, transparent);
+  --_border: var(--ds-action);
+
   justify-self: start;
   padding: var(--ds-space-2) var(--ds-space-3);
-  border: 1px solid var(--ds-action);
-  border-radius: 0.5rem;
-  background: var(--ds-surface);
+  border: var(--ds-border-width) solid var(--_border);
+  border-radius: var(--ds-radius-md);
+  background: var(--_bg);
   color: var(--ds-action);
+  font-size: var(--ds-font-size-md);
+  line-height: var(--ds-line-height-md);
   cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+
+  &.primary {
+    --_bg: var(--ds-action);
+    --_hover-bg: color-mix(in srgb, var(--ds-action) 85%, black);
+    --_active-bg: color-mix(in srgb, var(--ds-action) 75%, black);
+
+    color: var(--ds-surface);
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--_hover-bg);
+  }
+
+  &.primary:hover:not(:disabled) {
+    --_border: var(--_hover-bg);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--_active-bg);
+  }
+
+  &.primary:active:not(:disabled) {
+    --_border: var(--_active-bg);
+  }
 
   &:focus-visible {
     outline: var(--ds-focus-ring-width) solid var(--ds-focus);
     outline-offset: var(--ds-focus-ring-offset);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }

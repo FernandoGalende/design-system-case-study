@@ -98,6 +98,8 @@ focus ring checked manually with the keyboard.
 - A `@layer` for the design system's styles, so apps can override them predictably.
 - Routing or Storybook for the showcase as more components are added.
 - Visual regression tests.
+- A design-system Button component, with `--ds-action-hover` tokens per brand; the showcase uses
+  demo buttons styled locally, with hover and active states derived via `color-mix()`.
 - Design review of the Nova border color, and a distinct error icon shape.
 - Tests that still assert on internal classes (`.icon`, `.heading`, `.body`, `.visually-hidden`).
 - `tokens.spec.ts` resolves `tokens.scss` from `process.cwd()`, so it must run from the project
