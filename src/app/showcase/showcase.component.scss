@@ -71,6 +71,57 @@ code {
   }
 }
 
-a {
+// Scoped so it doesn't override the color of projected a[dsAlertAction].
+.notes a {
   color: var(--ds-action);
+}
+
+.group {
+  margin-top: var(--ds-space-6);
+
+  h3 {
+    margin: 0 0 var(--ds-space-3);
+    font-size: 1rem;
+  }
+}
+
+.examples {
+  display: grid;
+  gap: var(--ds-space-3);
+  max-width: 45rem;
+  justify-items: stretch;
+}
+
+pre {
+  max-width: 45rem;
+  margin: var(--ds-space-3) 0 0;
+  padding: var(--ds-space-3) var(--ds-space-4);
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: var(--ds-page-bg);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.narrow-frame {
+  inline-size: 375px;
+  max-inline-size: 100%;
+  padding: var(--ds-space-4);
+  border: 1px dashed var(--ds-text-muted);
+  border-radius: 0.5rem;
+}
+
+.demo-button {
+  justify-self: start;
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border: 1px solid var(--ds-action);
+  border-radius: 0.5rem;
+  background: var(--ds-surface);
+  color: var(--ds-action);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-focus);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
 }

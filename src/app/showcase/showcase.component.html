@@ -8,9 +8,89 @@
   </p>
 </section>
 
-<section class="canvas" aria-label="Component examples">
-  <div class="canvas-label">CURRENT STARTER</div>
-  <ds-alert heading="Payment method expiring" [dismissible]="true" />
+<section class="canvas" aria-labelledby="alert-title">
+  <div class="canvas-label">COMPONENT</div>
+  <h2 id="alert-title">Alert</h2>
+  <p>
+    Alerts that are already on the page when it loads use <code>live="off"</code>, so screen
+    readers don't announce them on load. Alerts that appear later keep the default: errors are
+    announced assertively (<code>role="alert"</code>), everything else politely
+    (<code>role="status"</code>).
+  </p>
+
+  <div class="group">
+    <h3>Variants</h3>
+    <div class="examples">
+      <ds-alert variant="info" heading="New verification method available" live="off">
+        You can now verify your account with a passkey.
+        <a dsAlertAction href="#alert-title">Set up passkey</a>
+      </ds-alert>
+      <ds-alert variant="success" heading="Payment method updated" live="off">
+        Your new payment method will be used for future purchases.
+      </ds-alert>
+      <ds-alert variant="warning" heading="Payment method expiring" live="off">
+        Your card ending in 4242 expires next month.
+        <a dsAlertAction href="#alert-title">Update payment method</a>
+      </ds-alert>
+      <ds-alert variant="error" heading="We couldn't save your changes" live="off">
+        Check your connection and try again.
+        <button dsAlertAction type="button">Try again</button>
+      </ds-alert>
+    </div>
+    <pre><code>{{ snippets.variants }}</code></pre>
+  </div>
+
+  <div class="group">
+    <h3>Optional parts</h3>
+    <div class="examples">
+      <ds-alert variant="success" live="off">Changes saved.</ds-alert>
+      <ds-alert [showIcon]="false" heading="Scheduled maintenance" live="off">
+        The service will be unavailable on Sunday from 02:00 to 03:00.
+      </ds-alert>
+      <ds-alert heading="Passkeys are here" live="off">
+        <svg dsAlertIcon viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="7" cy="10" r="4" />
+          <path d="M11 10h7M15 10v3M18 10v2" stroke-linecap="round" />
+        </svg>
+        A custom icon replaces the default one and fills the icon slot.
+      </ds-alert>
+    </div>
+    <pre><code>{{ snippets.optional }}</code></pre>
+  </div>
+
+  <div class="group">
+    <h3>Dismissible</h3>
+    <div class="examples">
+      @if (dismissibleVisible()) {
+        <ds-alert
+          dismissible
+          dismissLabel="Dismiss payment alert"
+          variant="warning"
+          heading="Payment method expiring"
+          (dismissed)="dismissAlert()"
+        >
+          Your card ending in 4242 expires next month.
+        </ds-alert>
+      }
+      <button #showAgain type="button" class="demo-button" (click)="dismissibleVisible.set(true)">
+        Show the alert again
+      </button>
+    </div>
+    <pre><code>{{ snippets.dismissible }}</code></pre>
+  </div>
+
+  <div class="group">
+    <h3>Compact layout (375px container)</h3>
+    <div class="examples">
+      <div class="narrow-frame">
+        <ds-alert variant="warning" heading="Payment method expiring" live="off">
+          Your card ending in 4242 expires next month. Update it to avoid interruptions.
+          <a dsAlertAction href="#alert-title">Update payment method</a>
+        </ds-alert>
+      </div>
+    </div>
+    <pre><code>{{ snippets.compact }}</code></pre>
+  </div>
 </section>
 
 <section class="notes">
