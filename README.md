@@ -1,103 +1,100 @@
-# Design System Engineer — Take-home Case Study
+# Alert and Card — design system case study
 
-## Context
+`ds-alert` and `ds-card` for an Angular design system: one implementation per component, two
+brands (Luma and Nova) driven only by shared design tokens. The original brief is in
+[CHALLENGE.md](CHALLENGE.md); every decision and correction is logged in [AI-LOG.md](AI-LOG.md).
 
-You have joined a team responsible for a design system used by multiple product teams and multiple brands. Design has introduced a new **Alert** component, and the system also needs a **Card** component. Your task is to turn the supplied specification into a reusable Alert component and to design and build a Card component, both of which could become part of the shared component library.
-
-**Timebox: maximum 4 hours.**
-
-We do not expect production completeness. We care more about your technical decisions, component API, maintainability, accessibility, and ability to explain trade-offs than the amount of code produced.
-
-## Your task
-
-### 1. Alert component
-
-Implement the Alert component in Angular using the starter repository and the design specification in [`spec/design-spec.html`](spec/design-spec.html).
-
-The design calls for:
-
-- `info`, `success`, `warning`, and `error` variants
-- optional title and body content
-- optional leading icon
-- optional action
-- dismissible and non-dismissible states
-- two brands driven by shared design tokens rather than separate component implementations
-- responsive behavior
-- appropriate accessibility behavior
-
-### 2. Card component
-
-Build a Card component (e.g. `ds-card`). There is **no design specification and no starter code** for it — the structure, API, and styling are up to you. The Card must:
-
-- consist of a **header**, a **body**, and a **footer**;
-- optionally show an **image in the header**;
-- work for both brands using the shared design tokens;
-- be shown with several examples on the showcase page, **at least one of which contains your Alert component** inside the Card.
-
-### Also include
-
-1. **Examples/documentation** showing how another developer should use the components. The existing showcase page is a suitable place.
-2. **Tests you consider valuable.** Exhaustive coverage is not required.
-
-## Technical interview
-
-The coding challenge is followed by a technical interview in which we discuss your solution together. You do not need to write documentation for it. [`INTERVIEW-TOPICS.md`](INTERVIEW-TOPICS.md) lists the topics you should be prepared to talk about.
-
-## AI tooling
-
-**We explicitly want you to solve this task with AI support.** Use the AI coding assistants or agents you would use in your daily work (e.g. Claude Code, GitHub Copilot, Cursor). We are interested in how you work with these tools: how you guide them, and how you review, verify, and correct their output. Be prepared to talk about this in the technical interview.
-
-## Getting started
-
-Requirements: Node.js 22.22.3+ or 24.15.0+, npm, and Git.
-
-Before making any changes, initialize a Git repository and commit the untouched starter as your first commit. This lets us see exactly what you changed:
+## Run, test, build
 
 ```bash
-git init
-git add .
-git commit -m "Initial starter"
-```
-
-Then install and run the app:
-
-```bash
+nvm use                      # Node 24.15 (.nvmrc); the Angular CLI needs 22.22.3+ or 24.15+
 npm install
-npm start
+npm start                    # showcase with examples and usage snippets; brand switcher top right
+npm test -- --watch=false    # Vitest + TestBed (jsdom)
+npm run build
 ```
 
-Then open the local URL shown by Angular.
+## Usage
 
-Tests:
-
-```bash
-npm test -- --watch=false
+```ts
+import { ALERT_IMPORTS } from './design-system/alert';
+import { CARD_IMPORTS } from './design-system/card';
+@Component({ imports: [ALERT_IMPORTS, CARD_IMPORTS], ... })
 ```
 
-## What is already provided
+**Alert.** Inputs: `variant` (`info` · `success` · `warning` · `error`), `heading`, `showIcon`,
+`dismissible`, `dismissLabel`, `live` (`off` · `polite` · `assertive`). Output: `dismissed`. The body
+is projected; the action is `a[dsAlertAction]` or `button[dsAlertAction]`; `[dsAlertIcon]` replaces
+the default icon. The alert is controlled: it emits `dismissed` and the parent removes it.
 
-- a runnable Angular app using standalone components, SCSS, and Vitest;
-- two brand token sets and a simple brand switcher;
-- a placeholder `ds-alert` component that compiles but is intentionally incomplete;
-- a showcase page;
-- the design specification for the Alert component.
+```html
+<ds-alert variant="warning" heading="Payment method expiring" live="off">
+  Your card ending in 4242 expires next month.
+  <a dsAlertAction href="/billing">Update payment method</a>
+</ds-alert>
+```
 
-There is no starter code or specification for the Card component.
+**Card.** Optional slots in a fixed reading order: `img[dsCardImage]` (with a required `alt`),
+`[dsCardHeader]`, the body (everything outside the named slots) and `[dsCardFooter]`.
+`[dsCardTitle]` goes on your own heading, so you choose its level.
 
-You are free to refactor the starter code where it improves the solution.
+```html
+<ds-card>
+  <div dsCardHeader><h3 dsCardTitle>Payment methods</h3></div>
+  Visa ending in 4242 · expires 11/26
+  <div dsCardFooter><button type="button">Add payment method</button></div>
+</ds-card>
+```
 
-## Submission
+## Key decisions and spec ambiguities
 
-Please commit as you go in the Git repository you created above. **Your submission must include the full Git history** — we are interested in how you approached the task, not only in the final result.
+- Configuration through inputs, content through projection; the card's default slot is the body,
+  so nothing is dropped.
+- Tokens are explicit per role: shared foundations once in `:root`, brand-specific values in both
+  brand blocks, component internals as private `--_*` properties.
+- Responsive with container queries: the alert switches to its compact layout below 30rem of its
+  own width, also inside a narrow card.
+- **Icon color trade-off:** warning and error use the spec's outlined icon and differ visually only
+  by color; the hidden variant prefix carries the meaning for assistive technology. To raise with
+  design.
+- **Action color contradiction:** the mock renders the action in the text color, but the brand
+  treatment says violet/teal and the starter has `--ds-action`. Followed the explicit rule; flagged
+  for design.
+- **Spacing:** spec pixels (3, 7, 10 px and the action's line height) are rounded to the spacing
+  and type scale.
 
-Submit in one of two ways:
+Details and reasons for each, row by row, in [AI-LOG.md](AI-LOG.md).
 
-- **Git link:** push the repository to a hosting service of your choice (e.g. GitHub, GitLab) and send us the link. If the repository is private, please grant us access.
-- **ZIP archive:** zip the repository folder **including the `.git` directory** and **without `node_modules`**. Note that `git archive` and GitHub's "Download ZIP" do not include the history, so please zip the folder itself, for example:
+## Accessibility and tests
 
-  ```bash
-  zip -r submission.zip . -x "node_modules/*" "dist/*" ".angular/*"
-  ```
+- Live regions: `polite` → `role="status"`, `assertive` → `role="alert"`, `off` → no role, never
+  an extra `aria-live`. Errors default to assertive; alerts present on load use `live="off"`.
+- A visually hidden variant prefix ("Error:") is read first and can be translated through
+  `DS_ALERT_VARIANT_LABELS`. Icons are decorative (`aria-hidden`).
+- Native elements: the dismiss button is a `button type="button"` named by `dismissLabel`, with a
+  24px hit area; button actions default to `type="button"` so they never submit a form. Focus is
+  visible with `--ds-focus`.
+- Card: required `alt` (the build fails without it, `alt=""` for decorative images), heading level
+  chosen by the consumer, and `div` slots in the examples to avoid fake banner/contentinfo
+  landmarks.
 
-We should be able to run it with `npm install`, `npm start`, and the test command above.
-# design-sytem-case-study
+The 35 tests cover the public and accessibility contract: alert roles per variant and `live`,
+accessible text and i18n prefix, projection, icons, action types and dismiss; card slot order,
+unused slots, nothing dropped, `alt` and heading level; and token parity between both brands.
+Layout, container queries and contrast can't be tested in jsdom, so they were checked in headless
+Chrome in both brands.
+
+## Left out and next steps
+
+- A core color palette, once a third brand or dark mode arrives.
+- A `@layer` for the design system's styles, so apps can override them predictably.
+- Routing or Storybook for the showcase as more components are added.
+- Visual regression tests.
+- Design review of the Nova border color, and a distinct error icon shape.
+
+## Working with AI
+
+Built with Claude Code, guided by the rules in [CLAUDE.md](CLAUDE.md): small steps, a plan before
+code, tokens only, accessibility in every component, and tests on behavior. I reviewed every diff
+before committing, and new tests were checked by breaking the code on purpose. Each accepted,
+rejected or corrected proposal is recorded in [AI-LOG.md](AI-LOG.md).
