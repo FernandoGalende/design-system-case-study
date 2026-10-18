@@ -34,7 +34,9 @@
 ## Workflow
 
 - Small changes. Propose a plan before writing code.
-- Never commit or change git config unless explicitly asked.
+- When a step is done, propose a commit with a conventional message
+  (feat/fix/test/docs/chore, scope, short summary) and run it only after I
+  approve. Never push, never amend or rewrite history, never change git config.
 - Keep AI-LOG.md up to date. After each task I give you, add one row to the
   table: the step, a one-line summary of my request, and a one-line summary of
   what you produced. Leave "What I changed and why" empty. When I tell you
