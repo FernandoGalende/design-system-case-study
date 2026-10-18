@@ -1,7 +1,19 @@
 :host {
-  display: block;
-  max-width: 67.5rem;
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr);
+  gap: var(--ds-space-6);
+  align-items: start;
+  max-width: 82rem;
   margin: 0 auto;
+
+  @media (max-width: 52rem) {
+    grid-template-columns: minmax(0, 1fr);
+
+    .page-nav {
+      position: static;
+      max-height: none;
+    }
+  }
 }
 
 .intro {
@@ -48,12 +60,13 @@ code {
   margin-bottom: 1rem;
 }
 
+// Storybook-like sidebar: sticky on the left, stacked above the content on narrow screens.
 .page-nav {
   position: sticky;
-  top: 0;
-  z-index: 1;
-  margin-bottom: var(--ds-space-6);
-  padding: var(--ds-space-2) var(--ds-space-4);
+  top: var(--ds-space-4);
+  max-height: calc(100vh - 2 * var(--ds-space-4));
+  overflow-y: auto;
+  padding: var(--ds-space-3);
   border: var(--ds-border-width) solid var(--ds-border-subtle);
   border-radius: var(--ds-radius-md);
   background: var(--ds-surface);
@@ -61,45 +74,48 @@ code {
   line-height: var(--ds-line-height-sm);
 
   ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--ds-space-1) var(--ds-space-4);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  > ul > li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--ds-space-1) var(--ds-space-3);
-
-    > a {
-      color: var(--ds-text);
-      font-weight: var(--ds-font-weight-semibold);
-    }
+  > ul > li + li {
+    margin-top: var(--ds-space-4);
   }
 
   a {
-    color: var(--ds-action);
+    display: block;
+    padding: var(--ds-space-1) var(--ds-space-2);
+    border-radius: var(--ds-radius-md);
+    color: var(--ds-text);
     text-decoration: none;
 
     &:hover {
-      text-decoration: underline;
+      background: var(--ds-page-bg);
     }
 
     &:focus-visible {
       outline: var(--ds-focus-ring-width) solid var(--ds-focus);
-      outline-offset: var(--ds-focus-ring-offset);
+      outline-offset: calc(-1 * var(--ds-focus-ring-width));
     }
+  }
+
+  // Component names read as group titles, like Storybook's sidebar.
+  > ul > li > a {
+    color: var(--ds-text-muted);
+    font-weight: var(--ds-font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  li li a {
+    padding-inline-start: var(--ds-space-4);
   }
 }
 
-// Keeps in-page link targets clear of the sticky navigation.
 h2[id],
 h3[id] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: var(--ds-space-4);
 }
 
 // Scoped so it doesn't override the color of projected a[dsAlertAction].

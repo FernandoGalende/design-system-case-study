@@ -1,16 +1,3 @@
-<section class="intro">
-  <p class="kicker">PLAYGROUND</p>
-  <h2>Alert and Card components</h2>
-  <p>
-    Live examples of <code>ds-alert</code> and <code>ds-card</code>, with usage snippets. Both
-    components are built only from the shared design tokens, so the brand switcher at the top right
-    restyles every example for Luma or Nova without changing a component. The Alert follows the
-    <a href="/spec/design-spec.html" target="_blank" rel="noreferrer"
-      >design specification (opens in a new tab)</a
-    >; the Card has no specification and reuses the Alert's visual language.
-  </p>
-</section>
-
 <nav class="page-nav" aria-label="On this page">
   <!-- role="list" keeps list semantics in Safari, which drops them with list-style: none. -->
   <ul role="list">
@@ -34,174 +21,171 @@
   </ul>
 </nav>
 
-<section class="canvas" aria-labelledby="alert-title">
-  <div class="canvas-label">COMPONENT</div>
-  <h2 id="alert-title">Alert</h2>
-  <p>
-    Alerts that are already on the page when it loads use <code>live="off"</code>, so screen
-    readers don't announce them on load. Alerts that appear later keep the default: errors are
-    announced assertively (<code>role="alert"</code>), everything else politely
-    (<code>role="status"</code>).
-  </p>
+<div class="page-content">
+  <section class="intro">
+    <p class="kicker">Components</p>
+    <h2>Alert and Card</h2>
+    <p>
+      One implementation per component, two brands. Switch between Luma and Nova at the top right:
+      every example restyles from the shared design tokens, with no brand-specific code.
+    </p>
+    <p>
+      The Alert follows the
+      <a href="/spec/design-spec.html" target="_blank" rel="noreferrer"
+        >design specification (opens in a new tab)</a
+      >. The Card has no specification, so it reuses the Alert's tokens and visual language.
+    </p>
+  </section>
 
-  <div class="group">
-    <h3 id="alert-variants" #variantsHeading tabindex="-1">Variants</h3>
-    <div class="examples">
-      @if (!dismissedVariants().has('info')) {
-        <ds-alert
-          variant="info"
-          heading="New verification method available"
-          live="off"
-          dismissible
-          dismissLabel="Dismiss verification alert"
-          (dismissed)="dismissVariant('info')"
-        >
-          You can now verify your account with a passkey.
-          <a dsAlertAction href="#alert-title">Set up passkey</a>
+  <section class="canvas" aria-labelledby="alert-title">
+    <div class="canvas-label">COMPONENT</div>
+    <h2 id="alert-title">Alert</h2>
+    <p>
+      Alerts that are already on the page when it loads use <code>live="off"</code>, so screen
+      readers don't announce them on load. Alerts that appear later keep the default: errors are
+      announced assertively (<code>role="alert"</code>), everything else politely
+      (<code>role="status"</code>).
+    </p>
+
+    <div class="group">
+      <h3 id="alert-variants" #variantsHeading tabindex="-1">Variants</h3>
+      <div class="examples">
+        @if (!dismissedVariants().has('info')) {
+          <ds-alert
+            variant="info"
+            heading="New verification method available"
+            live="off"
+            dismissible
+            dismissLabel="Dismiss verification alert"
+            (dismissed)="dismissVariant('info')"
+          >
+            You can now verify your account with a passkey.
+            <a dsAlertAction href="#alert-title">Set up passkey</a>
+          </ds-alert>
+        }
+        <ds-alert variant="success" heading="Payment method updated" live="off">
+          Your new payment method will be used for future purchases.
         </ds-alert>
-      }
-      <ds-alert variant="success" heading="Payment method updated" live="off">
-        Your new payment method will be used for future purchases.
-      </ds-alert>
-      @if (!dismissedVariants().has('warning')) {
-        <ds-alert
-          variant="warning"
-          heading="Payment method expiring"
-          live="off"
-          dismissible
-          dismissLabel="Dismiss expiring card alert"
-          (dismissed)="dismissVariant('warning')"
-        >
-          Your card ending in 4242 expires next month.
-          <a dsAlertAction href="#alert-title">Update payment method</a>
+        @if (!dismissedVariants().has('warning')) {
+          <ds-alert
+            variant="warning"
+            heading="Payment method expiring"
+            live="off"
+            dismissible
+            dismissLabel="Dismiss expiring card alert"
+            (dismissed)="dismissVariant('warning')"
+          >
+            Your card ending in 4242 expires next month.
+            <a dsAlertAction href="#alert-title">Update payment method</a>
+          </ds-alert>
+        }
+        <ds-alert variant="error" heading="We couldn't save your changes" live="off">
+          Check your connection and try again.
+          <button dsAlertAction type="button">Try again</button>
         </ds-alert>
-      }
-      <ds-alert variant="error" heading="We couldn't save your changes" live="off">
-        Check your connection and try again.
-        <button dsAlertAction type="button">Try again</button>
-      </ds-alert>
-      @if (dismissedVariants().size) {
-        <button type="button" class="demo-button" (click)="restoreVariants()">
-          Restore dismissed examples
-        </button>
-      }
+        @if (dismissedVariants().size) {
+          <button type="button" class="demo-button" (click)="restoreVariants()">
+            Restore dismissed examples
+          </button>
+        }
+      </div>
+      <pre><code>{{ snippets.variants }}</code></pre>
     </div>
-    <pre><code>{{ snippets.variants }}</code></pre>
-  </div>
 
-  <div class="group">
-    <h3 id="alert-optional">Optional parts</h3>
-    <div class="examples">
-      <ds-alert variant="success" live="off">Changes saved.</ds-alert>
-      <ds-alert [showIcon]="false" heading="Scheduled maintenance" live="off">
-        The service will be unavailable on Sunday from 02:00 to 03:00.
-      </ds-alert>
-      <ds-alert heading="Passkeys are here" live="off">
-        <svg dsAlertIcon viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="7" cy="10" r="4" />
-          <path d="M11 10h7M15 10v3M18 10v2" stroke-linecap="round" />
-        </svg>
-        A custom icon replaces the default one and fills the icon slot.
-      </ds-alert>
-    </div>
-    <pre><code>{{ snippets.optional }}</code></pre>
-  </div>
-
-  <div class="group">
-    <h3 id="alert-dismissible">Dismissible</h3>
-    <div class="examples">
-      @if (dismissibleVisible()) {
-        <ds-alert
-          #dismissibleAlert
-          dismissible
-          [dismissLabel]="dismissLabel"
-          variant="warning"
-          heading="Payment method expiring"
-          (dismissed)="dismissAlert()"
-        >
-          Your card ending in 4242 expires next month.
+    <div class="group">
+      <h3 id="alert-optional">Optional parts</h3>
+      <div class="examples">
+        <ds-alert variant="success" live="off">Changes saved.</ds-alert>
+        <ds-alert [showIcon]="false" heading="Scheduled maintenance" live="off">
+          The service will be unavailable on Sunday from 02:00 to 03:00.
         </ds-alert>
-      } @else {
-        <button #showAgain type="button" class="demo-button" (click)="showAlert()">
-          Show the alert again
-        </button>
-      }
-    </div>
-    <pre><code>{{ snippets.dismissible }}</code></pre>
-  </div>
-
-  <div class="group">
-    <h3 id="alert-compact">Compact layout (375px container)</h3>
-    <div class="examples">
-      <div class="narrow-frame">
-        <ds-alert variant="warning" heading="Payment method expiring" live="off">
-          Your card ending in 4242 expires next month. Update it to avoid interruptions.
-          <a dsAlertAction href="#alert-title">Update payment method</a>
+        <ds-alert heading="Passkeys are here" live="off">
+          <svg dsAlertIcon viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="7" cy="10" r="4" />
+            <path d="M11 10h7M15 10v3M18 10v2" stroke-linecap="round" />
+          </svg>
+          A custom icon replaces the default one and fills the icon slot.
         </ds-alert>
       </div>
+      <pre><code>{{ snippets.optional }}</code></pre>
     </div>
-    <pre><code>{{ snippets.compact }}</code></pre>
-  </div>
-</section>
 
-<section class="canvas" aria-labelledby="card-title">
-  <div class="canvas-label">COMPONENT</div>
-  <h2 id="card-title">Card</h2>
-  <p>
-    The Card has no specification: it reuses the Alert's surface, radius, spacing and type scale, so
-    both read as one system in either brand. Header, image and footer are optional slots; content
-    outside them is the body.
-  </p>
-
-  <div class="group">
-    <h3 id="card-structure">Structure</h3>
-    <div class="card-grid">
-      <ds-card>
-        <div dsCardHeader><h4 dsCardTitle>Team workspace</h4></div>
-        Invite your teammates and share projects in one place.
-        <div dsCardFooter>
-          <button type="button" class="demo-button">Invite</button>
-          <button type="button" class="demo-button">Not now</button>
-        </div>
-      </ds-card>
-      <ds-card>
-        <img dsCardImage src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 90'%3E%3Crect width='160' height='90' fill='%23e9edf5'/%3E%3Ccircle cx='38' cy='62' r='34' fill='%23c9d2e3'/%3E%3Ccircle cx='118' cy='30' r='22' fill='%23d8dde6'/%3E%3Crect x='70' y='52' width='70' height='24' rx='12' fill='%23b8c3d6'/%3E%3C/svg%3E" alt="" />
-        <div dsCardHeader><h4 dsCardTitle>Design reviews</h4></div>
-        Share work in progress and collect feedback in one thread.
-        <div dsCardFooter>
-          <button type="button" class="demo-button">Start a review</button>
-        </div>
-      </ds-card>
-      <ds-card>
-        <div dsCardHeader><h4 dsCardTitle>Storage</h4></div>
-        You are using 3.2 GB of 10 GB. No footer: unused slots leave no empty space.
-      </ds-card>
+    <div class="group">
+      <h3 id="alert-dismissible">Dismissible</h3>
+      <div class="examples">
+        @if (dismissibleVisible()) {
+          <ds-alert
+            #dismissibleAlert
+            dismissible
+            [dismissLabel]="dismissLabel"
+            variant="warning"
+            heading="Payment method expiring"
+            (dismissed)="dismissAlert()"
+          >
+            Your card ending in 4242 expires next month.
+          </ds-alert>
+        } @else {
+          <button #showAgain type="button" class="demo-button" (click)="showAlert()">
+            Show the alert again
+          </button>
+        }
+      </div>
+      <pre><code>{{ snippets.dismissible }}</code></pre>
     </div>
-    <pre><code>{{ snippets.cardStructure }}</code></pre>
-  </div>
 
-  <div class="group">
-    <h3 id="card-alert">Alert inside a card</h3>
-    <div class="card-grid single">
-      <ds-card>
-        <div dsCardHeader><h4 dsCardTitle>Payment methods</h4></div>
-        Visa ending in 4242 · expires 11/26
-        <ds-alert variant="warning" heading="Payment method expiring" live="off">
-          Your card expires next month. Update it to avoid interruptions.
-          <a dsAlertAction href="#card-title">Update card</a>
-        </ds-alert>
-        <div dsCardFooter>
-          <button type="button" class="demo-button">Add payment method</button>
+    <div class="group">
+      <h3 id="alert-compact">Compact layout (375px container)</h3>
+      <div class="examples">
+        <div class="narrow-frame">
+          <ds-alert variant="warning" heading="Payment method expiring" live="off">
+            Your card ending in 4242 expires next month. Update it to avoid interruptions.
+            <a dsAlertAction href="#alert-title">Update payment method</a>
+          </ds-alert>
         </div>
-      </ds-card>
+      </div>
+      <pre><code>{{ snippets.compact }}</code></pre>
     </div>
-    <pre><code>{{ snippets.cardWithAlert }}</code></pre>
-  </div>
+  </section>
 
-  <div class="group">
-    <h3 id="card-narrow">Alert inside a narrow card (375px container)</h3>
-    <div class="examples">
-      <div class="narrow-frame">
+  <section class="canvas" aria-labelledby="card-title">
+    <div class="canvas-label">COMPONENT</div>
+    <h2 id="card-title">Card</h2>
+    <p>
+      The Card has no specification: it reuses the Alert's surface, radius, spacing and type scale, so
+      both read as one system in either brand. Header, image and footer are optional slots; content
+      outside them is the body.
+    </p>
+
+    <div class="group">
+      <h3 id="card-structure">Structure</h3>
+      <div class="card-grid">
+        <ds-card>
+          <div dsCardHeader><h4 dsCardTitle>Team workspace</h4></div>
+          Invite your teammates and share projects in one place.
+          <div dsCardFooter>
+            <button type="button" class="demo-button">Invite</button>
+            <button type="button" class="demo-button">Not now</button>
+          </div>
+        </ds-card>
+        <ds-card>
+          <img dsCardImage src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 90'%3E%3Crect width='160' height='90' fill='%23e9edf5'/%3E%3Ccircle cx='38' cy='62' r='34' fill='%23c9d2e3'/%3E%3Ccircle cx='118' cy='30' r='22' fill='%23d8dde6'/%3E%3Crect x='70' y='52' width='70' height='24' rx='12' fill='%23b8c3d6'/%3E%3C/svg%3E" alt="" />
+          <div dsCardHeader><h4 dsCardTitle>Design reviews</h4></div>
+          Share work in progress and collect feedback in one thread.
+          <div dsCardFooter>
+            <button type="button" class="demo-button">Start a review</button>
+          </div>
+        </ds-card>
+        <ds-card>
+          <div dsCardHeader><h4 dsCardTitle>Storage</h4></div>
+          You are using 3.2 GB of 10 GB. No footer: unused slots leave no empty space.
+        </ds-card>
+      </div>
+      <pre><code>{{ snippets.cardStructure }}</code></pre>
+    </div>
+
+    <div class="group">
+      <h3 id="card-alert">Alert inside a card</h3>
+      <div class="card-grid single">
         <ds-card>
           <div dsCardHeader><h4 dsCardTitle>Payment methods</h4></div>
           Visa ending in 4242 · expires 11/26
@@ -214,7 +198,27 @@
           </div>
         </ds-card>
       </div>
+      <pre><code>{{ snippets.cardWithAlert }}</code></pre>
     </div>
-    <pre><code>{{ snippets.cardNarrow }}</code></pre>
-  </div>
-</section>
+
+    <div class="group">
+      <h3 id="card-narrow">Alert inside a narrow card (375px container)</h3>
+      <div class="examples">
+        <div class="narrow-frame">
+          <ds-card>
+            <div dsCardHeader><h4 dsCardTitle>Payment methods</h4></div>
+            Visa ending in 4242 · expires 11/26
+            <ds-alert variant="warning" heading="Payment method expiring" live="off">
+              Your card expires next month. Update it to avoid interruptions.
+              <a dsAlertAction href="#card-title">Update card</a>
+            </ds-alert>
+            <div dsCardFooter>
+              <button type="button" class="demo-button">Add payment method</button>
+            </div>
+          </ds-card>
+        </div>
+      </div>
+      <pre><code>{{ snippets.cardNarrow }}</code></pre>
+    </div>
+  </section>
+</div>
