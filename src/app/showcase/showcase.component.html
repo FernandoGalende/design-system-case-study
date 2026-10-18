@@ -1,10 +1,13 @@
 <section class="intro">
-  <p class="kicker">START HERE</p>
-  <h2>Implement <code>ds-alert</code> and a Card component</h2>
+  <p class="kicker">PLAYGROUND</p>
+  <h2>Alert and Card components</h2>
   <p>
-    The box below is intentionally only a placeholder. Use the design specification in
-    <code>spec/design-spec.html</code> for the Alert and evolve its API as you see fit. The Card
-    has no specification or starter code — its structure and API are up to you.
+    Live examples of <code>ds-alert</code> and <code>ds-card</code>, with usage snippets. Both
+    components are built only from the shared design tokens, so the brand switcher at the top right
+    restyles every example for Luma or Nova without changing a component. The Alert follows the
+    <a href="/spec/design-spec.html" target="_blank" rel="noreferrer"
+      >design specification (opens in a new tab)</a
+    >; the Card has no specification and reuses the Alert's visual language.
   </p>
 </section>
 
@@ -63,18 +66,20 @@
     <div class="examples">
       @if (dismissibleVisible()) {
         <ds-alert
+          #dismissibleAlert
           dismissible
-          dismissLabel="Dismiss payment alert"
+          [dismissLabel]="dismissLabel"
           variant="warning"
           heading="Payment method expiring"
           (dismissed)="dismissAlert()"
         >
           Your card ending in 4242 expires next month.
         </ds-alert>
+      } @else {
+        <button #showAgain type="button" class="demo-button" (click)="showAlert()">
+          Show the alert again
+        </button>
       }
-      <button #showAgain type="button" class="demo-button" (click)="dismissibleVisible.set(true)">
-        Show the alert again
-      </button>
     </div>
     <pre><code>{{ snippets.dismissible }}</code></pre>
   </div>
@@ -90,23 +95,5 @@
       </div>
     </div>
     <pre><code>{{ snippets.compact }}</code></pre>
-  </div>
-</section>
-
-<section class="notes">
-  <div>
-    <strong>Expected showcase</strong>
-    <p>
-      Replace or extend this page with representative examples for variants, content, actions,
-      brands, and responsive behavior — including at least one Card that contains an Alert.
-    </p>
-  </div>
-  <div>
-    <strong>Specification</strong>
-    <p>
-      <a href="/spec/design-spec.html" target="_blank" rel="noreferrer"
-        >Open the Figma-like design spec</a
-      > for the Alert component.
-    </p>
   </div>
 </section>

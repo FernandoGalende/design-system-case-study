@@ -1,4 +1,12 @@
-import { Component, ElementRef, signal, viewChild } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  ElementRef,
+  inject,
+  Injector,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ALERT_IMPORTS } from '../design-system/alert';
 
 @Component({
@@ -8,13 +16,31 @@ import { ALERT_IMPORTS } from '../design-system/alert';
   styleUrl: './showcase.component.scss',
 })
 export class ShowcaseComponent {
-  protected readonly dismissibleVisible = signal(true);
-  private readonly showAgainButton = viewChild.required<ElementRef<HTMLButtonElement>>('showAgain');
+  private readonly injector = inject(Injector);
 
+  protected readonly dismissLabel = 'Dismiss payment alert';
+  protected readonly dismissibleVisible = signal(true);
+  private readonly showAgainButton = viewChild<ElementRef<HTMLButtonElement>>('showAgain');
+  private readonly dismissibleAlert = viewChild('dismissibleAlert', { read: ElementRef });
+
+  // The focused control disappears in both directions, so focus moves to the control that
+  // replaces it once it has rendered.
   protected dismissAlert() {
     this.dismissibleVisible.set(false);
-    // The dismiss button disappears with the alert, so focus moves to a stable control.
-    this.showAgainButton().nativeElement.focus();
+    afterNextRender(() => this.showAgainButton()?.nativeElement.focus(), {
+      injector: this.injector,
+    });
+  }
+
+  protected showAlert() {
+    this.dismissibleVisible.set(true);
+    afterNextRender(
+      () => {
+        const alert: HTMLElement | undefined = this.dismissibleAlert()?.nativeElement;
+        alert?.querySelector<HTMLButtonElement>(`button[aria-label="${this.dismissLabel}"]`)?.focus();
+      },
+      { injector: this.injector },
+    );
   }
 
   protected readonly snippets = {
@@ -38,12 +64,16 @@ import { ALERT_IMPORTS } from './design-system/alert';
     dismissible: `// The alert only emits; the parent decides whether it is shown.
 visible = signal(true);
 
+// When the focused control disappears, move focus to the one that replaces it
+// once it has rendered: afterNextRender(() => el.focus(), { injector }).
 @if (visible()) {
   <ds-alert dismissible dismissLabel="Dismiss payment alert"
             variant="warning" heading="Payment method expiring"
-            (dismissed)="visible.set(false)">
+            (dismissed)="hide()">
     Your card ending in 4242 expires next month.
   </ds-alert>
+} @else {
+  <button type="button" (click)="show()">Show the alert again</button>
 }`,
     compact: `<!-- No extra input: the alert switches to its compact
      layout when its container is narrower than 30rem. -->
