@@ -34,9 +34,9 @@
 ## Accessibility
 
 - Native elements, accessible names, visible focus with --ds-focus,
-  no color-only meaning. Exception: the alert's warning and error icons follow
-  the spec and differ only by color; the hidden variant prefix carries the
-  meaning for screen readers, and the alert's text must state the severity.
+  no color-only meaning. Exception: warning and error icons follow the spec and
+  differ only by color; the variant is conveyed to assistive technology by the
+  hidden prefix. Known trade-off, to raise with design.
 
 ## Workflow
 
