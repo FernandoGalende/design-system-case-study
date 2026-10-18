@@ -39,9 +39,10 @@
   approve. Never push, never amend or rewrite history, never change git config.
 - Keep AI-LOG.md up to date. After each task I give you, add one row to the
   table: the step, a one-line summary of my request, and a one-line summary of
-  what you produced. Leave "What I changed and why" empty. When I tell you
-  what I changed, fill that column with my words, briefly. Never edit older rows
-  unless I ask. Don't log trivial requests.
+  what you produced. Fill "What I changed and why" only with my words, briefly:
+  what I changed, or what I verified if I accepted it unchanged. Never invent
+  reasons. Never edit older rows unless I ask. Don't log trivial requests.
+  Show me the diff before committing.
 
 ## Tests
 
