@@ -47,6 +47,29 @@ class ProjectedContentHost {
   readonly showIcon = signal(true);
 }
 
+@Component({
+  imports: [ALERT_IMPORTS],
+  template: `
+    <form (submit)="$event.preventDefault(); submitCount = submitCount + 1">
+      <ds-alert variant="error">
+        Couldn't save.
+        <button dsAlertAction class="default-type">Try again</button>
+      </ds-alert>
+      <ds-alert>
+        Ready to send.
+        <button dsAlertAction type="submit" class="submit-type">Send</button>
+      </ds-alert>
+      <ds-alert>
+        New method.
+        <a dsAlertAction href="/passkeys">Set up passkey</a>
+      </ds-alert>
+    </form>
+  `,
+})
+class ActionTypeHost {
+  submitCount = 0;
+}
+
 function setup<T>(hostType: Type<T>) {
   const fixture = TestBed.createComponent(hostType);
   fixture.detectChanges();
@@ -192,6 +215,32 @@ describe('AlertComponent', () => {
       update((host) => host.showIcon.set(false));
 
       expect(alert.querySelector('.custom-icon')).toBeNull();
+    });
+  });
+
+  describe('action type', () => {
+    it('defaults a button action to type=button so it does not submit a form', () => {
+      const { fixture, host } = setup(ActionTypeHost);
+      const button = fixture.nativeElement.querySelector('.default-type') as HTMLButtonElement;
+
+      expect(button.getAttribute('type')).toBe('button');
+      button.click();
+      expect(host.submitCount).toBe(0);
+    });
+
+    it('keeps a type set by the consumer', () => {
+      const { fixture, host } = setup(ActionTypeHost);
+      const button = fixture.nativeElement.querySelector('.submit-type') as HTMLButtonElement;
+
+      expect(button.getAttribute('type')).toBe('submit');
+      button.click();
+      expect(host.submitCount).toBe(1);
+    });
+
+    it('sets no type on a link action', () => {
+      const { fixture } = setup(ActionTypeHost);
+
+      expect(fixture.nativeElement.querySelector('a[dsAlertAction]').hasAttribute('type')).toBe(false);
     });
   });
 
