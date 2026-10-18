@@ -1,1 +1,31 @@
-// Surface and layout styles come in the styling step.
+// The card pads only the bottom: whichever slot comes first pads its own top, so the image can
+// touch the top edge. Every slot pads its own sides.
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-3);
+  padding-block-end: var(--ds-space-4);
+  border: var(--ds-border-width) solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-surface);
+  color: var(--ds-text);
+  // Clips the image to the rounded corners.
+  overflow: clip;
+}
+
+.body {
+  display: grid;
+  gap: var(--ds-space-3);
+  padding-inline: var(--ds-space-4);
+  color: var(--ds-text-muted);
+  font-size: var(--ds-font-size-sm);
+  line-height: var(--ds-line-height-sm);
+
+  &:first-child {
+    padding-block-start: var(--ds-space-4);
+  }
+
+  &:empty {
+    display: none;
+  }
+}

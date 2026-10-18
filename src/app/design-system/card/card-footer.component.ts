@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   selector: '[dsCardFooter]',
   template: '<ng-content />',
+  styleUrl: './card-footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardFooterComponent {}

@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  margin: 0;
+  padding-inline: var(--ds-space-4);
+}
+
+:host(:first-child) {
+  padding-block-start: var(--ds-space-4);
+}

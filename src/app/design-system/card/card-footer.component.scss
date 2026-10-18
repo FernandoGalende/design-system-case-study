@@ -1,0 +1,13 @@
+// Wraps instead of using a container query: actions drop to the next line in narrow cards.
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-2);
+  margin: 0;
+  padding-inline: var(--ds-space-4);
+}
+
+:host(:first-child) {
+  padding-block-start: var(--ds-space-4);
+}
