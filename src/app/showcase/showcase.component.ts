@@ -100,7 +100,7 @@ visible = signal(true);
     compact: `<!-- No extra input: the alert switches to its compact
      layout when its container is narrower than 30rem. -->
 <div style="inline-size: 375px">
-  <ds-alert variant="warning" heading="Payment method expiring">...</ds-alert>
+  <ds-alert variant="warning" heading="Payment method expiring" live="off">...</ds-alert>
 </div>`,
     cardStructure: `// component.ts
 import { CARD_IMPORTS } from './design-system/card';
@@ -111,22 +111,22 @@ import { CARD_IMPORTS } from './design-system/card';
 <ds-card>
   <!-- alt is required: describe the image, or alt="" if decorative -->
   <img dsCardImage src="/workspace.jpg" alt="" />
-  <header dsCardHeader><h4 dsCardTitle>Team workspace</h4></header>
+  <div dsCardHeader><h4 dsCardTitle>Team workspace</h4></div>
   Invite your teammates and share projects in one place.
-  <footer dsCardFooter>
+  <div dsCardFooter>
     <button type="button">Invite</button>
-  </footer>
+  </div>
 </ds-card>`,
     cardWithAlert: `<ds-card>
-  <header dsCardHeader><h4 dsCardTitle>Payment methods</h4></header>
+  <div dsCardHeader><h4 dsCardTitle>Payment methods</h4></div>
   Visa ending in 4242 · expires 11/26
   <ds-alert variant="warning" heading="Payment method expiring" live="off">
     Your card expires next month.
     <a dsAlertAction href="/billing">Update card</a>
   </ds-alert>
-  <footer dsCardFooter>
+  <div dsCardFooter>
     <button type="button">Add payment method</button>
-  </footer>
+  </div>
 </ds-card>`,
     cardNarrow: `<!-- The alert queries its own width, so inside a narrow card
      it switches to its compact layout with no extra input. -->
