@@ -106,7 +106,6 @@ focus ring checked manually with the keyboard.
   root.
 - The action sets its default `type` once; a dynamic `[attr.type]` binding from the consumer would
   compete with it.
-- The brand select in the app shell loses its drawn chevron in forced-colors mode.
 
 ## Working with AI
 
