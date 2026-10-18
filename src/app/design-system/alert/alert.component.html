@@ -15,10 +15,8 @@
               <circle cx="10" cy="14" r="1.1" fill="currentColor" stroke="none" />
             }
             @case ('error') {
-              <!-- Filled, unlike warning, so the two never differ by color alone. -->
-              <circle cx="10" cy="10" r="9" fill="currentColor" />
-              <path class="on-fill" d="M10 5.5v5.5" stroke-linecap="round" />
-              <circle class="on-fill-dot" cx="10" cy="14" r="1.1" stroke="none" />
+              <path d="M10 5.5v5.5" stroke-linecap="round" />
+              <circle cx="10" cy="14" r="1.1" fill="currentColor" stroke="none" />
             }
             @default {
               <circle cx="10" cy="6" r="1.1" fill="currentColor" stroke="none" />

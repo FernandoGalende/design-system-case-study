@@ -54,14 +54,6 @@ $compact-breakpoint: 30rem;
 .default-icon {
   inline-size: 100%;
   block-size: 100%;
-
-  .on-fill {
-    stroke: var(--ds-surface);
-  }
-
-  .on-fill-dot {
-    fill: var(--ds-surface);
-  }
 }
 
 .content {
