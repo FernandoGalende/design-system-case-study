@@ -22,23 +22,46 @@
   </p>
 
   <div class="group">
-    <h3>Variants</h3>
+    <h3 #variantsHeading tabindex="-1">Variants</h3>
     <div class="examples">
-      <ds-alert variant="info" heading="New verification method available" live="off">
-        You can now verify your account with a passkey.
-        <a dsAlertAction href="#alert-title">Set up passkey</a>
-      </ds-alert>
+      @if (!dismissedVariants().has('info')) {
+        <ds-alert
+          variant="info"
+          heading="New verification method available"
+          live="off"
+          dismissible
+          dismissLabel="Dismiss verification alert"
+          (dismissed)="dismissVariant('info')"
+        >
+          You can now verify your account with a passkey.
+          <a dsAlertAction href="#alert-title">Set up passkey</a>
+        </ds-alert>
+      }
       <ds-alert variant="success" heading="Payment method updated" live="off">
         Your new payment method will be used for future purchases.
       </ds-alert>
-      <ds-alert variant="warning" heading="Payment method expiring" live="off">
-        Your card ending in 4242 expires next month.
-        <a dsAlertAction href="#alert-title">Update payment method</a>
-      </ds-alert>
+      @if (!dismissedVariants().has('warning')) {
+        <ds-alert
+          variant="warning"
+          heading="Payment method expiring"
+          live="off"
+          dismissible
+          dismissLabel="Dismiss expiring card alert"
+          (dismissed)="dismissVariant('warning')"
+        >
+          Your card ending in 4242 expires next month.
+          <a dsAlertAction href="#alert-title">Update payment method</a>
+        </ds-alert>
+      }
       <ds-alert variant="error" heading="We couldn't save your changes" live="off">
         Check your connection and try again.
         <button dsAlertAction type="button">Try again</button>
       </ds-alert>
+      @if (dismissedVariants().size) {
+        <button type="button" class="demo-button" (click)="restoreVariants()">
+          Restore dismissed examples
+        </button>
+      }
     </div>
     <pre><code>{{ snippets.variants }}</code></pre>
   </div>

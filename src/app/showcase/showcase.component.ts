@@ -32,6 +32,27 @@ export class ShowcaseComponent {
     });
   }
 
+  // Variants mirror the spec: info and warning are dismissible. When one is dismissed (or
+  // restored), focus moves to the group heading so it is never lost.
+  protected readonly dismissedVariants = signal<ReadonlySet<'info' | 'warning'>>(new Set());
+  private readonly variantsHeading = viewChild.required<ElementRef<HTMLElement>>('variantsHeading');
+
+  protected dismissVariant(variant: 'info' | 'warning') {
+    this.dismissedVariants.update((dismissed) => new Set(dismissed).add(variant));
+    this.focusVariantsHeading();
+  }
+
+  protected restoreVariants() {
+    this.dismissedVariants.set(new Set());
+    this.focusVariantsHeading();
+  }
+
+  private focusVariantsHeading() {
+    afterNextRender(() => this.variantsHeading().nativeElement.focus(), {
+      injector: this.injector,
+    });
+  }
+
   protected showAlert() {
     this.dismissibleVisible.set(true);
     afterNextRender(
