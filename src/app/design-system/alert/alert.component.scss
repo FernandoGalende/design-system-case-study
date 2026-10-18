@@ -5,6 +5,7 @@ $compact-breakpoint: 30rem;
   --_icon-size: 1.25rem;
   --_dismiss-size: 1.5rem;
   --_padding-compact: 0.875rem;
+  --_icon-offset: 1px;
 
   --_bg: var(--ds-alert-info-bg);
   --_border: var(--ds-alert-info-border);
@@ -46,12 +47,21 @@ $compact-breakpoint: 30rem;
   place-items: center;
   inline-size: var(--_icon-size);
   block-size: var(--_icon-size);
+  margin-block-start: var(--_icon-offset);
   color: var(--_fg);
 }
 
 .default-icon {
   inline-size: 100%;
   block-size: 100%;
+
+  .on-fill {
+    stroke: var(--ds-surface);
+  }
+
+  .on-fill-dot {
+    fill: var(--ds-surface);
+  }
 }
 
 .content {
@@ -71,7 +81,9 @@ $compact-breakpoint: 30rem;
   line-height: var(--ds-line-height-sm);
 }
 
+// Flex so the line box follows the action's own font size, not the inherited one.
 .action {
+  display: flex;
   margin-block-start: var(--ds-space-2);
 }
 
