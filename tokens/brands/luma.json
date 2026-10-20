@@ -126,7 +126,7 @@
               "com.figma.hiddenFromPublishing": false
             },
             "$type": "color",
-            "$value": "#edfbf3"
+            "$value": "#ff0000"
           },
           "border": {
             "$extensions": {
