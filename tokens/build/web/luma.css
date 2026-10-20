@@ -3,11 +3,12 @@
  */
 
 :root, [data-brand='luma'] {
-  --ds-border-subtle: #d8dde6;
   --ds-page-bg: #f6f7fb;
   --ds-surface: #ffffff;
   --ds-text: #1f2430;
   --ds-text-muted: #626b7a;
+  --ds-border-subtle: #d8dde6;
+  --ds-border-width: 1px;
   --ds-focus: #5b3df5;
   --ds-action: #4d32df;
   --ds-alert-info-bg: #eef2ff;
@@ -22,5 +23,19 @@
   --ds-alert-error-bg: #fff0f1;
   --ds-alert-error-border: #ef8c92;
   --ds-alert-error-icon: #b4232d;
+  --ds-font-size-sm: 0.8125rem;
+  --ds-font-size-md: 0.875rem;
+  --ds-line-height-sm: 1.1875rem;
+  --ds-line-height-md: 1.25rem;
+  --ds-font-weight-semibold: 600;
+  --ds-font-weight-bold: 700;
+  --ds-focus-ring-width: 2px;
+  --ds-focus-ring-offset: 2px;
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.25rem;
+  --ds-space-6: 1.5rem;
   --ds-radius-md: 0.75rem;
 }

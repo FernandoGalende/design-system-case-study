@@ -50,8 +50,8 @@ the default icon. The alert is controlled: it emits `dismissed` and the parent r
 
 - Configuration through inputs, content through projection; the card's default slot is the body,
   so nothing is dropped.
-- Tokens are explicit per role: shared foundations once in `:root`, brand-specific values in both
-  brand blocks, component internals as private `--_*` properties.
+- Tokens are explicit per role: one complete block per brand (Luma also on `:root`), so a brand
+  can change any token on its own; component internals as private `--_*` properties.
 - Responsive with container queries: the alert switches to its compact layout below 30rem of its
   own width, also inside a narrow card.
 - **Icon color trade-off:** warning and error use the spec's outlined icon and differ visually only
@@ -122,9 +122,11 @@ and doesn't change any component or the showcase.
 Run `npm install`, then `npm run tokens`. The output goes to `tokens/build/web` (CSS custom
 properties), `tokens/build/ios` (Swift) and `tokens/build/android` (Jetpack Compose).
 
-The DTCG JSON files in `tokens/` are the source of truth: `foundations.json` holds the shared
-values and each brand has its own file in `tokens/brands/`. `build-tokens.mjs` runs Style
-Dictionary once per brand, and `token-pipeline.spec.ts` proves the generated CSS matches
+The DTCG JSON files in `tokens/brands/` are the source of truth, one complete file per brand so
+each brand can change any token on its own. `luma.json` is synced from Figma with Tokens Studio:
+`build-tokens.mjs` unwraps its token sets, drops the Figma extensions and gives Figma's unitless
+numbers their unit (rem for type, spacing and radius; px for borders and focus ring), failing on
+a number it has no unit for. It then runs Style Dictionary once per brand, and `token-pipeline.spec.ts` proves the generated CSS matches
 `tokens.scss` selector by selector, name by name and value by value.
 
 Why it matters: one source of truth for web, iOS and Android across brands. Next step:

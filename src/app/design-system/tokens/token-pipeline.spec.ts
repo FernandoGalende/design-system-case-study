@@ -35,9 +35,7 @@ describe('token pipeline', () => {
     scss = await readProjectFile('src/app/design-system/tokens/tokens.scss');
   });
 
-  // The first rule matching ':root' in tokens.scss is the shared foundations block.
   it.each([
-    ['foundations', ':root'],
     ['luma', "[data-brand='luma']"],
     ['nova', "[data-brand='nova']"],
   ])('builds %s.css with the same selector, names and values as tokens.scss', async (file, marker) => {

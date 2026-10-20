@@ -23,8 +23,8 @@
   Never SCSS variables ($...) for themable values: brand switching is runtime.
 - Only --ds-\* tokens or private --\_\* properties: no hardcoded colors, radii,
   spacing or font sizes. Components never know the active brand.
-- tokens.scss holds shared foundations once in :root and only brand-specific
-  values in the brand blocks, following the existing naming.
+- tokens.scss has one complete block per brand (Luma also on :root), so each
+  brand can change any token on its own, following the existing naming.
 - Component-internal constants that don't vary by brand are private --\_\*
   custom properties at the top of the component's SCSS, not tokens.
 - Tokens stay explicit per role: never point a token to another role just
