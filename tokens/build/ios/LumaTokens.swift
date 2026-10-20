@@ -16,7 +16,7 @@ public class LumaTokens {
     public static let dsAlertInfoBg = UIColor(red: 0.933, green: 0.949, blue: 1.000, alpha: 1)
     public static let dsAlertInfoBorder = UIColor(red: 0.604, green: 0.663, blue: 1.000, alpha: 1)
     public static let dsAlertInfoIcon = UIColor(red: 0.302, green: 0.196, blue: 0.875, alpha: 1)
-    public static let dsAlertSuccessBg = UIColor(red: 0.929, green: 0.984, blue: 0.953, alpha: 1)
+    public static let dsAlertSuccessBg = UIColor(red: 1.000, green: 0.000, blue: 0.000, alpha: 1)
     public static let dsAlertSuccessBorder = UIColor(red: 0.443, green: 0.812, blue: 0.584, alpha: 1)
     public static let dsAlertSuccessIcon = UIColor(red: 0.075, green: 0.478, blue: 0.239, alpha: 1)
     public static let dsAlertWarningBg = UIColor(red: 1.000, green: 0.969, blue: 0.898, alpha: 1)

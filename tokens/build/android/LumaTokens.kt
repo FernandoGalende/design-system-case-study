@@ -18,7 +18,7 @@ object LumaTokens {
   val dsAlertInfoBg = Color(0xffeef2ff)
   val dsAlertInfoBorder = Color(0xff9aa9ff)
   val dsAlertInfoIcon = Color(0xff4d32df)
-  val dsAlertSuccessBg = Color(0xffedfbf3)
+  val dsAlertSuccessBg = Color(0xffff0000)
   val dsAlertSuccessBorder = Color(0xff71cf95)
   val dsAlertSuccessIcon = Color(0xff137a3d)
   val dsAlertWarningBg = Color(0xfffff7e5)
