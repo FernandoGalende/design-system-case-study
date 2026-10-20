@@ -114,6 +114,16 @@ code, tokens only, accessibility in every component, and tests on behavior. I re
 before committing, and new tests were checked by breaking the code on purpose. Each accepted,
 rejected or corrected proposal is recorded in [AI-LOG.md](AI-LOG.md).
 
+I used one model, Claude Opus 5.5, for the whole timebox because I was in a hurry and didn't stop to
+choose per task. Looking back at the history, about a quarter of the commits were small, closed
+tasks that a cheaper model would have handled: AI-LOG rows with my own text, short rules in
+CLAUDE.md, moving the spacing scale without changing values, and one-line showcase fixes. Opus was
+worth it for API and semantics decisions (alert and card), accessibility, and for catching what I
+hadn't asked about; a small diff can hide a long diagnosis, like the Vitest types. Next time: Opus
+to plan and review, a cheaper model to execute a plan that is already clear, switching with
+`/model`. The commit trailers show which model each commit came from, so the split would be visible
+in the history.
+
 ## Extra (post-timebox)
 
 After the timebox I explored a multi-platform token pipeline with Style Dictionary that generates
