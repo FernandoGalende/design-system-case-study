@@ -25,7 +25,11 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [{ "glob": "design-spec.html", "input": "spec", "output": "spec" }],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "tokens/build/web/luma.css",
+              "tokens/build/web/nova.css",
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {

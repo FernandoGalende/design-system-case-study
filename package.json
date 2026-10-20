@@ -6,9 +6,12 @@
     "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
-    "start": "ng serve",
-    "build": "ng build",
     "tokens": "node build-tokens.mjs",
+    "prestart": "npm run tokens",
+    "start": "ng serve",
+    "prebuild": "npm run tokens",
+    "build": "ng build",
+    "pretest": "npm run tokens",
     "test": "ng test --no-progress"
   },
   "dependencies": {

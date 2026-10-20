@@ -23,8 +23,10 @@
   Never SCSS variables ($...) for themable values: brand switching is runtime.
 - Only --ds-\* tokens or private --\_\* properties: no hardcoded colors, radii,
   spacing or font sizes. Components never know the active brand.
-- tokens.scss has one complete block per brand (Luma also on :root), so each
-  brand can change any token on its own, following the existing naming.
+- Token source is tokens/brands/<brand>.json, one complete file per brand so each
+  brand can change any token on its own. The CSS in tokens/build/web is generated
+  (npm run tokens), loaded by the app and never edited by hand; luma.json comes
+  from Figma, nova.json is manual.
 - Component-internal constants that don't vary by brand are private --\_\*
   custom properties at the top of the component's SCSS, not tokens.
 - Tokens stay explicit per role: never point a token to another role just

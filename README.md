@@ -102,8 +102,8 @@ focus ring checked manually with the keyboard.
   demo buttons styled locally, with hover and active states derived via `color-mix()`.
 - Design review of the Nova border color, and a distinct error icon shape.
 - Tests that still assert on internal classes (`.icon`, `.heading`, `.body`, `.visually-hidden`).
-- `tokens.spec.ts` resolves `tokens.scss` from `process.cwd()`, so it must run from the project
-  root.
+- `tokens.spec.ts` resolves the generated token CSS from `process.cwd()`, so it must run from the
+  project root.
 - The action sets its default `type` once; a dynamic `[attr.type]` binding from the consumer would
   compete with it.
 
@@ -117,7 +117,8 @@ rejected or corrected proposal is recorded in [AI-LOG.md](AI-LOG.md).
 ## Extra (post-timebox): multi-platform tokens
 
 Done after the 4-hour timebox and optional. It lives on the branch `post-timebox/token-pipeline`
-and doesn't change any component or the showcase.
+and doesn't change any component or the showcase; the app loads the generated token CSS instead
+of `tokens.scss`.
 
 Run `npm install`, then `npm run tokens`. The output goes to `tokens/build/web` (CSS custom
 properties), `tokens/build/ios` (Swift) and `tokens/build/android` (Jetpack Compose).
@@ -126,11 +127,12 @@ The DTCG JSON files in `tokens/brands/` are the source of truth, one complete fi
 each brand can change any token on its own. `luma.json` is synced from Figma with Tokens Studio:
 `build-tokens.mjs` unwraps its token sets, drops the Figma extensions and gives Figma's unitless
 numbers their unit (rem for type, spacing and radius; px for borders and focus ring), failing on
-a number it has no unit for. It then runs Style Dictionary once per brand, and `token-pipeline.spec.ts` proves the generated CSS matches
-`tokens.scss` selector by selector, name by name and value by value.
+a number it has no unit for. It then runs Style Dictionary once per brand. `npm start`, `npm run build` and `npm test` run
+`npm run tokens` first, and the app loads `tokens/build/web/luma.css` and `nova.css`, so a token
+changed in Figma reaches the screen with no manual step. `tokens.spec.ts` checks that both brands
+define the same tokens.
 
-Why it matters: one source of truth for web, iOS and Android across brands. Next step:
-`tokens.scss` becomes a generated file.
+Why it matters: one source of truth for web, iOS and Android across brands.
 
 ```mermaid
 flowchart TD

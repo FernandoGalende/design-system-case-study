@@ -1,19 +1,17 @@
-// The Luma block also matches :root, so a token missing from Nova silently falls back to its Luma
+// The Luma file also matches :root, so a token missing from Nova silently falls back to its Luma
 // value, and a Nova-only token is undefined in Luma. Both brands must define the same tokens.
+// The CSS is built from tokens/brands/*.json (npm run tokens), which the app loads.
 
 // Specs are type-checked without Node types, so node:fs is loaded at runtime instead of imported.
-async function readTokens(): Promise<string> {
+async function readTokens(brand: string): Promise<string> {
   const fsModule = 'node:fs';
   const { readFileSync } = await import(/* @vite-ignore */ fsModule);
   const process = (globalThis as unknown as { process: { cwd(): string } }).process;
-  return readFileSync(`${process.cwd()}/src/app/design-system/tokens/tokens.scss`, 'utf8');
+  return readFileSync(`${process.cwd()}/tokens/build/web/${brand}.css`, 'utf8');
 }
 
-function tokensIn(scss: string, selector: string): string[] {
-  const start = scss.indexOf(selector);
-  expect(start, `${selector} block`).toBeGreaterThan(-1);
-  const block = scss.slice(scss.indexOf('{', start) + 1, scss.indexOf('}', start));
-  return [...block.matchAll(/(--ds-[\w-]+)\s*:/g)].map((match) => match[1]);
+function tokensIn(css: string): string[] {
+  return [...css.matchAll(/(--ds-[\w-]+)\s*:/g)].map((match) => match[1]);
 }
 
 describe('brand tokens', () => {
@@ -21,9 +19,8 @@ describe('brand tokens', () => {
   let nova: string[];
 
   beforeAll(async () => {
-    const scss = await readTokens();
-    luma = tokensIn(scss, "[data-brand='luma']");
-    nova = tokensIn(scss, "[data-brand='nova']");
+    luma = tokensIn(await readTokens('luma'));
+    nova = tokensIn(await readTokens('nova'));
   });
 
   it('defines every Luma token in Nova', () => {

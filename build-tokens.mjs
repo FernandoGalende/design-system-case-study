@@ -5,7 +5,7 @@ import StyleDictionary from 'style-dictionary';
 
 const BRANDS = ['luma', 'nova'];
 const BUILD = 'tokens/build/';
-// Luma is the default brand, as in tokens.scss.
+// Luma is the default brand, so it also sits on :root.
 const SELECTORS = { luma: ":root, [data-brand='luma']", nova: "[data-brand='nova']" };
 const IOS_WEIGHTS = {
   100: 'ultraLight', 200: 'thin', 300: 'light', 400: 'regular', 500: 'medium',
